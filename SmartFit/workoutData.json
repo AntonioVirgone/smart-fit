@@ -1,0 +1,260 @@
+{
+  "name": "Scheda JUSTITI - Full Body",
+  "days": [
+    {
+      "id": "6BA81EC1-8A2C-4A8D-B3F7-7C1E9F4A2B5C",
+      "name": "GIORNO 1 - Full Body",
+      "exercises": [
+        {
+          "id": "1A2B3C4D-E5F6-7A8B-9C0D-E1F2A3B4C5D6",
+          "name": "CHEST PRESS",
+          "description": "Esercizio per i pettorali - 4 serie x 8 ripetizioni - Recupero: 90 secondi",
+          "imageName": "bench_press",
+          "muscleGroup": "Pettorali",
+          "instructions": [
+            "4 serie da 8 ripetizioni",
+            "Recupero: 90 secondi tra le serie",
+            "Posizionati sulla macchina chest press",
+            "Impugna le maniglie all'altezza del petto",
+            "Spingi in avanti fino a estensione completa",
+            "Torna lentamente alla posizione iniziale"
+          ]
+        },
+        {
+          "id": "2B3C4D5E-F6A7-8B9C-0D1E-F2A3B4C5D6E7",
+          "name": "DISTENSIONI PANCA INCLINATA 2 MANUBRI",
+          "description": "Esercizio per i pettorali superiori - 4 serie x 10 ripetizioni - Recupero: 90 secondi",
+          "imageName": "incline_bench",
+          "muscleGroup": "Pettorali",
+          "instructions": [
+            "4 serie da 10 ripetizioni",
+            "Recupero: 90 secondi tra le serie",
+            "Sdraiati sulla panca inclinata a 30-45 gradi",
+            "Impugna i manubri all'altezza delle spalle",
+            "Spingi verso l'alto fino a braccia distese",
+            "Abbassa lentamente i manubri controllando il movimento"
+          ]
+        },
+        {
+          "id": "3C4D5E6F-A7B8-9C0D-1E2F-A3B4C5D6E7F8",
+          "name": "PECK DECK MACHINE",
+          "description": "Esercizio di isolamento per i pettorali - 4 serie x 12 ripetizioni - Recupero: 90 secondi",
+          "imageName": "pec_deck",
+          "muscleGroup": "Pettorali",
+          "instructions": [
+            "4 serie da 12 ripetizioni",
+            "Recupero: 90 secondi tra le serie",
+            "Siediti sulla macchina con schiena dritta",
+            "Appoggia gli avambracci sui cuscinetti",
+            "Unisci le braccia davanti al petto contraendo i pettorali",
+            "Torna lentamente alla posizione iniziale"
+          ]
+        },
+        {
+          "id": "4D5E6F7A-B8C9-0D1E-2F3A-B4C5D6E7F8A9",
+          "name": "FRENCH PRESS PANCA PIANA 2 MANUBRI",
+          "description": "Esercizio per i tricipiti - 3 serie x 8 ripetizioni - Recupero: 90 secondi",
+          "imageName": "french_press",
+          "muscleGroup": "Tricipiti",
+          "instructions": [
+            "3 serie da 8 ripetizioni",
+            "Recupero: 90 secondi tra le serie",
+            "Sdraiati sulla panca piana",
+            "Solleva i manubri sopra il petto con braccia distese",
+            "Abbassa i manubri dietro la testa piegando solo i gomiti",
+            "Estendi le braccia tornando alla posizione iniziale"
+          ]
+        },
+        {
+          "id": "5E6F7A8B-C9D0-1E2F-3A4B-C5D6E7F8A9B0",
+          "name": "ESTENSIONI AL CAVO ALTO",
+          "description": "Esercizio per i tricipiti - 3 serie x 10 ripetizioni - Recupero: 90 secondi",
+          "imageName": "cable_pushdown",
+          "muscleGroup": "Tricipiti",
+          "instructions": [
+            "3 serie da 10 ripetizioni",
+            "Recupero: 90 secondi tra le serie",
+            "Posizionati di fronte alla macchina con cavo alto",
+            "Impugna la corda o la barra con presa neutra",
+            "Mantieni i gomiti fermi lungo i fianchi",
+            "Estendi gli avambracci verso il basso contraendo i tricipiti"
+          ]
+        },
+        {
+          "id": "6F7A8B9C-D0E1-2F3A-4B5C-D6E7F8A9B0C1",
+          "name": "CRUNCH MACHINE",
+          "description": "Esercizio per gli addominali - 3 serie x 15 ripetizioni - Recupero: 60 secondi",
+          "imageName": "crunch_machine",
+          "muscleGroup": "Addominali",
+          "instructions": [
+            "3 serie da 15 ripetizioni",
+            "Recupero: 60 secondi tra le serie",
+            "Regola il peso appropriato sulla macchina",
+            "Posizionati seduto con schiena dritta contro il supporto",
+            "Fletti il busto in avanti contraendo gli addominali",
+            "Torna lentamente alla posizione iniziale"
+          ]
+        },
+        {
+          "id": "7A8B9C0D-E1F2-3A4B-5C6D-E7F8A9B0C1D2",
+          "name": "PLANK",
+          "description": "Esercizio isometrico per addominali - 2 serie x MAX tempo - Recupero: 60 secondi",
+          "imageName": "plank",
+          "muscleGroup": "Addominali",
+          "instructions": [
+            "2 serie a tempo massimo",
+            "Recupero: 60 secondi tra le serie",
+            "Posizionati prono con avambracci a terra e gomiti sotto le spalle",
+            "Sollevati formando una linea retta da testa a talloni",
+            "Contrai addominali, glutei e mantieni la posizione",
+            "Respira normalmente durante l'esecuzione"
+          ]
+        },
+        {
+          "id": "8B9C0D1E-F2A3-4B5C-6D7E-F8A9B0C1D2E3",
+          "name": "ROWING",
+          "description": "Esercizio cardio vascolare - 15 minuti continui",
+          "imageName": "rowing",
+          "muscleGroup": "Cardio",
+          "instructions": [
+            "15 minuti di esercizio continuo",
+            "Mantieni un ritmo costante",
+            "Posizionati sul vogatore con piedi fissati",
+            "Impugna la maniglia con entrambe le mani",
+            "Spingi con le gambe mantenendo schiena dritta",
+            "Completa il movimento tirando con le braccia",
+            "Torna alla posizione iniziale controllando il movimento"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "9C0D1E2F-A3B4-5C6D-7E8F-A9B0C1D2E3F4",
+      "name": "GIORNO 2 - Dorsali e Bicipiti",
+      "exercises": [
+        {
+          "id": "A0B1C2D3-E4F5-6A7B-8C9D-E0F1A2B3C4D5",
+          "name": "REMATORE ALLA HIGH-ROW A CARICO LIBERO",
+          "description": "Esercizio per i dorsali - 4 serie x 8 ripetizioni - Recupero: 90 secondi",
+          "imageName": "high_row",
+          "muscleGroup": "Dorsali",
+          "instructions": [
+            "4 serie da 8 ripetizioni",
+            "Recupero: 90 secondi tra le serie",
+            "Posizionati di fronte alla macchina high-row",
+            "Impugna le maniglie con presa prona",
+            "Tira le maniglie verso il petto mantenendo schiena dritta",
+            "Torna lentamente alla posizione iniziale"
+          ]
+        },
+        {
+          "id": "B1C2D3E4-F5A6-7B8C-9D0E-F1A2B3C4D5E6",
+          "name": "LAT MACHINE AVANTI",
+          "description": "Esercizio per i dorsali - 4 serie x 10 ripetizioni - Recupero: 90 secondi",
+          "imageName": "lat_pulldown",
+          "muscleGroup": "Dorsali",
+          "instructions": [
+            "4 serie da 10 ripetizioni",
+            "Recupero: 90 secondi tra le serie",
+            "Siediti sulla macchina con cosce bloccate",
+            "Impugna la barra larga con presa prona",
+            "Tira la barra verso il petto avvicinando le scapole",
+            "Torna lentamente alla posizione iniziale"
+          ]
+        },
+        {
+          "id": "C2D3E4F5-A6B7-8C9D-0E1F-A2B3C4D5E6F7",
+          "name": "REMATORE ALLA LOW-PULL A CARICO LIBERO",
+          "description": "Esercizio per i dorsali - 4 serie x 12 ripetizioni - Recupero: 90 secondi - Macchina a pacco peli presa prona, gomiti alti e larghi",
+          "imageName": "low_row",
+          "muscleGroup": "Dorsali",
+          "instructions": [
+            "4 serie da 12 ripetizioni",
+            "Recupero: 90 secondi tra le serie",
+            "Posizionati sulla macchina low-row",
+            "Impugna le maniglie con presa prona",
+            "Tira le maniglie verso l'addome mantenendo gomiti alti e larghi",
+            "Contrai i dorsali al punto di massima contrazione",
+            "Torna lentamente alla posizione iniziale"
+          ]
+        },
+        {
+          "id": "D3E4F5A6-B7C8-9D0E-1F2A-B3C4D5E6F7A8",
+          "name": "CURL ALTERNATO SEDUTO PANCA INCLINATA 2 MANUBRI",
+          "description": "Esercizio per i bicipiti - 3 serie x 8 ripetizioni - Recupero: 90 secondi",
+          "imageName": "incline_curl",
+          "muscleGroup": "Bicipiti",
+          "instructions": [
+            "3 serie da 8 ripetizioni per braccio",
+            "Recupero: 90 secondi tra le serie",
+            "Sdraiati sulla panca inclinata",
+            "Impugna i manubri con palmi in avanti",
+            "Esegui curl alternati piegando un braccio alla volta",
+            "Mantieni il gomito fermo durante il movimento",
+            "Abbassa lentamente il manubrio controllando la discesa"
+          ]
+        },
+        {
+          "id": "E4F5A6B7-C8D9-0E1F-2A3B-C4D5E6F7A8B9",
+          "name": "CURL HAMMER IN PIEDI 2 MANUBRI",
+          "description": "Esercizio per i bicipiti - 3 serie x 10 ripetizioni - Recupero: 90 secondi",
+          "imageName": "hammer_curl",
+          "muscleGroup": "Bicipiti",
+          "instructions": [
+            "3 serie da 10 ripetizioni",
+            "Recupero: 90 secondi tra le serie",
+            "In piedi con schiena dritta",
+            "Impugna i manubri con presa a martello (palmi uno di fronte all'altro)",
+            "Solleva entrambi i manubri contemporaneamente",
+            "Contrai i bicipiti al punto di massima contrazione",
+            "Abbassa lentamente i manubri"
+          ]
+        },
+        {
+          "id": "F5A6B7C8-D9E0-1F2A-3B4C-D5E6F7A8B9C0",
+          "name": "CRUNCH A TERRA",
+          "description": "Esercizio per gli addominali - 3 serie x 10 ripetizioni - Recupero: 60 secondi",
+          "imageName": "crunch_floor",
+          "muscleGroup": "Addominali",
+          "instructions": [
+            "3 serie da 10 ripetizioni",
+            "Recupero: 60 secondi tra le serie",
+            "Sdraiati supino con ginocchia piegate e piedi a terra",
+            "Mani dietro la testa o incrociate sul petto",
+            "Solleva le spalle da terra contraendo gli addominali",
+            "Torna lentamente alla posizione iniziale"
+          ]
+        },
+        {
+          "id": "A6B7C8D9-E0F1-2A3B-4C5D-E6F7A8B9C0D1",
+          "name": "LEG RAISE GAMBE PIEGATE",
+          "description": "Esercizio per gli addominali - 3 serie x 10 ripetizioni - Recupero: 0 secondi",
+          "imageName": "leg_raise",
+          "muscleGroup": "Addominali",
+          "instructions": [
+            "3 serie da 10 ripetizioni",
+            "Recupero: 0 secondi tra le serie",
+            "Sdraiati supino con braccia lungo i fianchi",
+            "Solleva le gambe piegate verso il petto",
+            "Contrai gli addominali inferiori",
+            "Abbassa lentamente le gambe senza toccare terra"
+          ]
+        },
+        {
+          "id": "B7C8D9E0-F1A2-3B4C-5D6E-F7A8B9C0D1E2",
+          "name": "BIKE SEDUTO",
+          "description": "Esercizio cardio vascolare - 15 minuti continui",
+          "imageName": "exercise_bike",
+          "muscleGroup": "Cardio",
+          "instructions": [
+            "15 minuti di esercizio continuo",
+            "Regola l'altezza e la resistenza della cyclette",
+            "Mantieni una postura corretta con schiena dritta",
+            "Pedala a ritmo costante",
+            "Mantieni una frequenza cardiaca adeguata"
+          ]
+        }
+      ]
+    }
+  ]
+}
