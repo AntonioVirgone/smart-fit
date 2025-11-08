@@ -17,20 +17,23 @@ struct WorkoutDayDetailView: View {
             backgroundGradient
             
             VStack {
+                /*
                 Text(workoutDay.name)
                     .font(.title2)
                     .fontWeight(.bold)
+                    .foregroundColor(.white)
                     .padding()
-                
+                */
                 Text("\(workoutDay.exercises.count) exercizi in questa giornata")
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.white)
                 
                 exercisesList
                 
                 Spacer()
             }
         }
-        .navigationBarTitleDisplayMode(.large)
+        .navigationTitle(workoutDay.name)
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     // MARK: - Exercises List

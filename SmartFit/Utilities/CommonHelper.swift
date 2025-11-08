@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-// MARK: - Helpers
+// MARK: - Headers
 func headerIconName(muscleGroup: String) -> String {
     switch muscleGroup {
     case "Pettorali": return "figure.strengthtraining.traditional"

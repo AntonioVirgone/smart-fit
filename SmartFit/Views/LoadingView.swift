@@ -103,10 +103,3 @@ struct LoadingView: View {
         }
     }
 }
-
-// MARK: - Preview
-struct LoadingView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoadingView()
-    }
-}
