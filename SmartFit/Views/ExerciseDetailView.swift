@@ -54,6 +54,7 @@ struct ExerciseDetailView: View {
         .sheet(isPresented: $showingAddSet) {
              AddSetView(
                  exerciseName: exercise.name,
+                 muscleGroup: exercise.muscleGroup,
                  reps: $newReps,
                  weight: $newWeight,
                  notes: $newNotes,
