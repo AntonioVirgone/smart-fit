@@ -17,13 +17,6 @@ struct WorkoutDayDetailView: View {
             backgroundGradient
             
             VStack {
-                /*
-                Text(workoutDay.name)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding()
-                */
                 Text("\(workoutDay.exercises.count) exercizi in questa giornata")
                     .foregroundColor(.white)
                 
@@ -82,10 +75,10 @@ struct ExerciseRowView: View {
     private var exerciseIcon: some View {
         ZStack {
             Circle()
-                .fill(iconBackgroundColor)
+                .fill(headerIconColor(muscleGroup: exercise.muscleGroup))
                 .frame(width: 50, height: 50)
             
-            Image(systemName: iconName)
+            Image(systemName: headerIconName(muscleGroup: exercise.muscleGroup))
                 .font(.system(size: 20, weight: .medium))
                 .foregroundColor(.white)
         }
@@ -110,34 +103,5 @@ struct ExerciseRowView: View {
             }
         }
     
-    // MARK: - Helpers
-    private var iconName: String {
-        switch exercise.muscleGroup {
-        case "Pettorali":
-            return "figure.strengthtraining.traditional"
-        case "Dorsali":
-            return "figure.rower"
-        case "Bicipiti", "Tricipiti":
-            return "figure.arms.open"
-        case "Gambe":
-            return "figure.run"
-        case "Addominali":
-            return "figure.core.training"
-        default:
-            return "dumbbell.fill"
-        }
-    }
-
-    private var iconBackgroundColor: Color {
-        switch exercise.muscleGroup {
-        case "Pettorali": return .blue
-        case "Dorsali": return .green
-        case "Bicipiti": return .orange
-        case "Tricipiti": return .purple
-        case "Gambe": return .red
-        case "Addominali": return .indigo
-        default: return .gray
-        }
-    }
 
 }

@@ -44,7 +44,7 @@ struct ExerciseDetailView: View {
                     instructionsCard
                     
                     // Storico
-                    //historyCard
+                    historyCard
                 }
                 .padding()
             }
@@ -52,16 +52,14 @@ struct ExerciseDetailView: View {
         .navigationTitle(exercise.name)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showingAddSet) {
-            /*
              AddSetView(
-             exerciseName: exercise.name,
-             reps: $newReps,
-             weight: $newWeight,
-             notes: $newNotes,
-             isPresented: $showingAddSet,
-             onSave: addNewSet
+                 exerciseName: exercise.name,
+                 reps: $newReps,
+                 weight: $newWeight,
+                 notes: $newNotes,
+                 isPresented: $showingAddSet,
+                 onSave: addNewSet
              )
-             */
         }
     }
     
@@ -143,7 +141,7 @@ struct ExerciseDetailView: View {
                 
                 Text("Istruzioni")
                     .font(.headline)
-                    
+                
                 Spacer()
             }
             
@@ -169,6 +167,90 @@ struct ExerciseDetailView: View {
         .padding()
         .background(Color(.systemBackground))
         .cornerRadius(12)
+    }
+    
+    private var historyCard: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Image(systemName: "clock.fill")
+                    .foregroundColor(.blue)
+                
+                Text("Storico Allenamenti")
+                    .font(.headline)
+                
+                Spacer()
+                
+                Button("Aggiungi Serie") {
+                    showingAddSet = true
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(exerciseHistory.count >= 10)
+            }
+            
+            if exerciseHistory.isEmpty {
+                emptyHistoryView
+            } else {
+                historyListView
+            }
+        }
+        .padding()
+        .background(Color(.systemBackground))
+        .cornerRadius(12)
+    }
+    
+    private var emptyHistoryView: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "chart.bar.doc.horizontal")
+                .font(.system(size: 40))
+                .foregroundColor(.secondary)
+            
+            
+            Text("Nessun allenamento registrato")
+                .font(.system(size:16))
+                .foregroundColor(.secondary)
+            
+            Text("Inizia aggiungendo la tua prima serie!")
+                .font(.system(size: 14))
+                .foregroundColor(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 30)
+    }
+    
+    private var historyListView: some View {
+        LazyVStack(spacing: 12) {
+            ForEach(exerciseHistory.prefix(5)) { workoutSet in
+                HistoryRow(workoutSet: workoutSet) {
+                    deleteSet(workoutSet.id)
+                }
+            }
+            
+            if exerciseHistory.count > 5 {
+                Text("... e altre \(exerciseHistory.count - 5) serie")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+            }
+        }
+    }
+    
+    // MARK: - Actions
+    private func addNewSet() {
+        guard let reps = Int(newReps), let weight = Double(newWeight) else {
+            print("❌ Valori non validi")
+            return
+        }
+        
+        historyManager.addSet(for: exercise.name, reps: reps, weight: weight, notes: newNotes.isEmpty ? nil : newNotes)
+        
+        // Reset form
+        newReps = "8"
+        newWeight = "50"
+        newNotes = ""
+    }
+    
+    private func deleteSet(_ id: UUID) {
+        historyManager.deleteSet(for: exercise.name, setId: id)
     }
 }
 
@@ -206,7 +288,62 @@ struct HistoryRow: View {
     
     var body: some View {
         HStack(spacing: 12) {
+            Image(systemName: "dumbbell.fill")
+                .font(.system(size: 12))
+                .foregroundColor(.blue)
+                .frame(width: 24, height: 24)
+                .background(Color.blue.opacity(0.1))
+                .cornerRadius(6)
             
+            VStack(alignment: .leading, spacing: 2) {
+                Text(formattedDate)
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(.primary)
+                
+                if let notes = workoutSet.notes, !notes.isEmpty {
+                    Text(notes)
+                        .font(.system(size: 12))
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
+                }
+            }
+            
+            Spacer()
+            
+            VStack(alignment: .trailing, spacing: 2) {
+                Text("\(workoutSet.reps) reps")
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(.primary)
+                
+                Text("\(workoutSet.weight, specifier: "%.1f") kg")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(.blue)
+            }
+            
+            Button {
+                showingDeleteAlert = true
+            } label: {
+                Image(systemName: "trash")
+                    .font(.system(size: 14))
+                    .foregroundColor(.red)
+            }
+            .buttonStyle(.plain)
         }
+        .padding(12)
+        .background(Color(.systemGray6))
+        .cornerRadius(8)
+        .alert("Elimina Serie", isPresented: $showingDeleteAlert) {
+            Button("Annulla", role: .cancel) { }
+            Button("Elimina", role: .destructive, action: onDelete)
+        } message: {
+            Text("Vuoi eliminare questa serie?")
+        }
+    }
+    
+    private var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        return formatter.string(from: workoutSet.date)
     }
 }

@@ -32,5 +32,3 @@ func headerIconColor(muscleGroup: String) -> Color {
     default: return .gray
     }
 }
-
-
