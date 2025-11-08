@@ -80,7 +80,7 @@ struct LoadingView: View {
     // MARK: - Loading Text
     private var loadingText: some View {
         VStack(spacing: 8) {
-            Text("SmartFit	")
+            Text("SmartFit")
                 .font(.system(size: 32, weight: .bold, design: .rounded))
                 .foregroundColor(.white)
             

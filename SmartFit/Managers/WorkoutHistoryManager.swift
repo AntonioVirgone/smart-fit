@@ -63,6 +63,8 @@ class WorkoutHistoryManager: ObservableObject {
         return (totalSets, bestWeight)
     }
     
+    	
+    
     // MARK: Persistenza dei dati
     // In questo caso uso lo UserDefault, ma i dati rimangono salvati solo in locale finchè non viene cancellata l'app.
     private func saveHistory() {
