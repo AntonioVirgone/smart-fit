@@ -1,8 +1,8 @@
 //
-//  CommonStyle.swift
+//  CommonView.swift
 //  SmartFit
 //
-//  Created by Antonio Virgone on 06/11/25.
+//  Created by Antonio Virgone on 07/11/25.
 //
 
 import Foundation
@@ -21,3 +21,8 @@ var backgroundGradient: some View {
     .ignoresSafeArea()
 }
 
+var cardDesign: some View {
+    RoundedRectangle(cornerRadius: 12)
+        .fill(Color.white.opacity(0.9))
+        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+}

@@ -19,7 +19,7 @@ class WorkoutHistoryManager: ObservableObject {
     
     // MARK: - Inizializzazione
     init() {
-        //        loadHistory()
+        loadHistory()
         print("📊 WorkoutHistoryManager inizializzato")
     }
     
@@ -41,6 +41,30 @@ class WorkoutHistoryManager: ObservableObject {
         print("✅ Nuova serie aggiunta per \(exerciseName): \(reps) reps × \(weight) kg")
     }
     
+    // MARK: - Recupera Storico per Esercizio
+    func getHistory(for exerciseName: String) -> [WorkoutSet] {
+        let history = workoutHistory[exerciseName] ?? []
+        return history.sorted { $0.date > $1.date }
+    }
+    
+    // MARK: - Elimina la serie
+    func deleteSet(for exerciseName: String, setId: UUID) {
+        workoutHistory[exerciseName]?.removeAll { $0.id == setId }
+        saveHistory()
+        print("🗑️ Serie eliminata per \(exerciseName)")
+    }
+    
+    // MARK: - Statistiche
+    func getStats(for exerciseName: String) -> (totalSets: Int, bestWeight: Double) {
+        let history = getHistory(for: exerciseName)
+        let totalSets = history.count
+        let bestWeight = history.map { $0.weight }.max() ?? 0.0
+        
+        return (totalSets, bestWeight)
+    }
+    
+    	
+    
     // MARK: Persistenza dei dati
     // In questo caso uso lo UserDefault, ma i dati rimangono salvati solo in locale finchè non viene cancellata l'app.
     private func saveHistory() {
@@ -55,4 +79,22 @@ class WorkoutHistoryManager: ObservableObject {
             print("❌ Errore salvataggio storico: \(error)")
         }
     }
+    
+    private func loadHistory() {
+        guard let data = UserDefaults.standard.data(forKey: saveKey) else {
+            print("📝 Nessuno storico precedente trovato")
+            return
+        }
+        
+        do {
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            workoutHistory = try decoder.decode([String: [WorkoutSet]].self, from: data)
+            print("📖 Storico caricato: \(workoutHistory.count) esercizi con dati")
+        } catch {
+            print("❌ Errore caricamento storico: \(error)")
+            workoutHistory = [:]
+        }
+    }
 }
+

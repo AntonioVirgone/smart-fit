@@ -45,9 +45,8 @@ struct DayRowView: View {
     var body: some View {
         ZStack {
             // Card design
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.white.opacity(0.9))
-                .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+            cardDesign
+            
             HStack {
                 VStack(alignment: .leading, spacing: 6) {
                     Text(day.name)
@@ -68,11 +67,4 @@ struct DayRowView: View {
             .padding(.vertical, 12)
         }
     }
-}
-
-#Preview {
-    WorkoutDaysListView(workoutPlan: WorkoutPlan(name: "Example",
-                                                 days: [WorkoutDay(name: "1", exercises: []),
-                                                        WorkoutDay(name: "2", exercises: []),
-                                                        WorkoutDay(name: "3", exercises: [])]))
 }
