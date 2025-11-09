@@ -11,6 +11,21 @@ import SwiftUI
 struct SmartFitApp: App {
     
     init() {
+        configureNavigationBarAppearance()
+    }
+    
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .preferredColorScheme(.light)
+        }
+    }
+    
+    // MARK: - UI Appearence Setup
+    private func configureNavigationBarAppearance() {
+        // Personalizzazione globale dell'app (aggiungeremo dopo)
+        print("🎨 Configurazione stile della Navigation Bar...")
+
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground() // ✅ rende la barra trasparente
         
@@ -25,22 +40,5 @@ struct SmartFitApp: App {
         
         // Colore pulsanti (es: freccia "indietro")
         UINavigationBar.appearance().tintColor = .white
-    }
-    
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-                .environmentObject(WorkoutHistoryManager())
-                .onAppear {
-                    print("🚀 SmartFit avviato!")
-                    setupAppearance()
-                }
-        }
-    }
-    
-    // MARK: - UI Setup
-    private func setupAppearance() {
-        // Personalizzazione globale dell'app (aggiungeremo dopo)
-        print("🎨 Configurazione aspetto app...")
     }
 }
