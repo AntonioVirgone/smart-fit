@@ -38,9 +38,9 @@ struct AddSetView: View {
                 validationSection
             }
             .scrollContentBackground(.hidden) // Nasconde lo sfondo bianco di default
-                .background(
-                    backgroundGradientForm
-                )
+            .background(
+                backgroundGradientForm
+            )
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -54,12 +54,12 @@ struct AddSetView: View {
                         .font(.headline)
                         .foregroundColor(.black)
                 }
-            
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Salva") {
                         saveSet()
                     }
-                    .disabled(!isFormValid)
+                    .disabled(!isFormValid(reps: Int(reps), weight: Double(weight)))
                 }
             }
             .alert("Errore", isPresented: $showError) {
@@ -121,60 +121,51 @@ struct AddSetView: View {
     }
     
     // MARK: - Validation Section
-        private var validationSection: some View {
-            Section {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Riepilogo")
-                        .font(.headline)
-                    
-                    if let repsInt = Int(reps), let weightDouble = Double(weight) {
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text("\(repsInt) ripetizioni")
-                                    .font(.subheadline)
-                                Text("\(weightDouble, specifier: "%.1f") kg")
-                                    .font(.subheadline)
-                                Text("Volume: \(Double(repsInt) * weightDouble, specifier: "%.1f") kg")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-                            
-                            Spacer()
-                            
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.green)
-                                .font(.title2)
-                        }
-                    } else {
-                        HStack {
-                            Text("Inserisci valori validi")
+    private var validationSection: some View {
+        Section {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Riepilogo")
+                    .font(.headline)
+                
+                if let repsInt = Int(reps), let weightDouble = Double(weight) {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("\(repsInt) ripetizioni")
                                 .font(.subheadline)
-                                .foregroundColor(.red)
-                            
-                            Spacer()
-                            
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(.red)
-                                .font(.title2)
+                            Text("\(weightDouble, specifier: "%.1f") kg")
+                                .font(.subheadline)
+                            Text("Volume: \(Double(repsInt) * weightDouble, specifier: "%.1f") kg")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
                         }
+                        
+                        Spacer()
+                        
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.green)
+                            .font(.title2)
+                    }
+                } else {
+                    HStack {
+                        Text("Inserisci valori validi")
+                            .font(.subheadline)
+                            .foregroundColor(.red)
+                        
+                        Spacer()
+                        
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.red)
+                            .font(.title2)
                     }
                 }
-                .padding(.vertical, 8)
             }
+            .padding(.vertical, 8)
         }
-    
-    // MARK: - Form Validation
-    private var isFormValid: Bool {
-        guard let repsInt = Int(reps), let weightDouble = Double(weight) else {
-            return false
-        }
-        
-        return repsInt > 0 && weightDouble >= 0
     }
     
     // MARK: - Actions
     private func saveSet() {
-        guard isFormValid else {
+        guard isFormValid(reps: Int(reps), weight: Double(weight)) else {
             showError = true
             return
         }
@@ -199,5 +190,5 @@ struct AddSetView: View {
         )
         .ignoresSafeArea()
     }
-
+    
 }
