@@ -382,5 +382,8 @@
             ]
         }
 
-    ]
+    ],
+  "profile": {
+    "name": "typicode"
+  }
 }
