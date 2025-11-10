@@ -1,0 +1,22 @@
+{
+  "allenamenti": [
+    {
+      "id": 1,
+      "giorno": "Giorno 1",
+      "titolo": "Full Body",
+      "esercizi": 8
+    },
+    {
+      "id": 2,
+      "giorno": "Giorno 2",
+      "titolo": "Dorsali e Bicipiti",
+      "esercizi": 8
+    },
+    {
+      "id": 3,
+      "giorno": "Giorno 3",
+      "titolo": "Spalle e Gambe",
+      "esercizi": 8
+    }
+  ]
+}
