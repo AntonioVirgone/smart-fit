@@ -9,19 +9,36 @@ import SwiftUI
 
 @main
 struct SmartFitApp: App {
+    
+    init() {
+        configureNavigationBarAppearance()
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .onAppear {
-                    print("🚀 SmartFit avviato!")
-                    setupAppearance()
-                }
+                .preferredColorScheme(.light)
         }
     }
     
-    // MARK: - UI Setup
-    private func setupAppearance() {
+    // MARK: - UI Appearence Setup
+    private func configureNavigationBarAppearance() {
         // Personalizzazione globale dell'app (aggiungeremo dopo)
-        print("🎨 Configurazione aspetto app...")
+        print("🎨 Configurazione stile della Navigation Bar...")
+
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground() // ✅ rende la barra trasparente
+        
+        // Titolo bianco
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        
+        // Applica a TUTTE le possibili varianti
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+        
+        // Colore pulsanti (es: freccia "indietro")
+        UINavigationBar.appearance().tintColor = .white
     }
 }

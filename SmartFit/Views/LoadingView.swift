@@ -80,7 +80,7 @@ struct LoadingView: View {
     // MARK: - Loading Text
     private var loadingText: some View {
         VStack(spacing: 8) {
-            Text("GymBro")
+            Text("SmartFit")
                 .font(.system(size: 32, weight: .bold, design: .rounded))
                 .foregroundColor(.white)
             
@@ -101,12 +101,5 @@ struct LoadingView: View {
         withAnimation(.easeInOut(duration: 2.0)) {
             progress = 1.0
         }
-    }
-}
-
-// MARK: - Preview
-struct LoadingView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoadingView()
     }
 }
