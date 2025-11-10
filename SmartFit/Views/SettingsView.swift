@@ -17,6 +17,12 @@ struct SettingsView: View {
     @State private var showingExportSheet = false
     @State private var exportData: String = ""
 
+    private var appVersion: (String, String) {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "-"
+        return (version, build)
+    }
+
     // MARK: - Body
     var body: some View {
         NavigationView {
@@ -78,14 +84,14 @@ struct SettingsView: View {
             HStack {
                 Text("Versione")
                 Spacer()
-                Text("1.0.0")
+                Text(appVersion.0)
                     .foregroundColor(.secondary)
             }
             
             HStack {
                 Text("Build")
                 Spacer()
-                Text("1")
+                Text(appVersion.1)
                     .foregroundColor(.secondary)
             }
             
