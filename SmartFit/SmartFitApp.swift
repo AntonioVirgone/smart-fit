@@ -9,7 +9,9 @@ import SwiftUI
 
 @main
 struct SmartFitApp: App {
-    
+    @StateObject private var dataService = WorkoutDataService()
+    @StateObject private var historyManager = WorkoutHistoryManager()
+        
     init() {
         configureNavigationBarAppearance()
     }
@@ -18,6 +20,12 @@ struct SmartFitApp: App {
         WindowGroup {
             ContentView()
                 .preferredColorScheme(.light)
+                .environmentObject(dataService)
+                .environmentObject(historyManager)
+                .onAppear {
+                    print("🚀 GymBro avviato!")
+                    print("📱 iOS Version: \(UIDevice.current.systemVersion)")
+                }
         }
     }
     

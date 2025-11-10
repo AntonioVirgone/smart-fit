@@ -13,6 +13,9 @@ struct ExerciseDetailView: View {
     let exercise: Exercise
     @EnvironmentObject var historyManager: WorkoutHistoryManager
     @State private var showingAddSet = false
+    @State private var showingEditSet: WorkoutSet? = nil
+    @State private var showingProgressChart = false
+    
     @State private var newReps = "8"
     @State private var newWeight = "50"
     @State private var newNotes = ""
@@ -52,15 +55,15 @@ struct ExerciseDetailView: View {
         .navigationTitle(exercise.name)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showingAddSet) {
-             AddSetView(
-                 exerciseName: exercise.name,
-                 muscleGroup: exercise.muscleGroup,
-                 reps: $newReps,
-                 weight: $newWeight,
-                 notes: $newNotes,
-                 isPresented: $showingAddSet,
-                 onSave: addNewSet
-             )
+            AddSetView(
+                exerciseName: exercise.name,
+                muscleGroup: exercise.muscleGroup,
+                reps: $newReps,
+                weight: $newWeight,
+                notes: $newNotes,
+                isPresented: $showingAddSet,
+                onSave: addNewSet
+            )
         }
     }
     
@@ -181,6 +184,16 @@ struct ExerciseDetailView: View {
                 
                 Spacer()
                 
+                // Pulsante Grafico
+                Button {
+                    showingProgressChart = true
+                } label: {
+                    Image(systemName: "chart.line.uptrend.xyaxis")
+                }
+                .disabled(exerciseHistory.isEmpty)
+                .buttonStyle(.bordered)
+                .tint(.blue)
+                
                 Button("Aggiungi Serie") {
                     showingAddSet = true
                 }
@@ -197,6 +210,33 @@ struct ExerciseDetailView: View {
         .padding()
         .background(Color(.systemBackground))
         .cornerRadius(12)
+        .sheet(item: $showingEditSet) { setToEdit in
+            EditSetView(
+                exerciseName: exercise.name,
+                muscleGroup: exercise.muscleGroup,
+                workoutSet: setToEdit,
+                isPresented: Binding(
+                    get: { showingEditSet != nil },
+                    set: { if !$0 { showingEditSet = nil } }
+                )
+            )
+            .environmentObject(historyManager)
+        }
+        .sheet(isPresented: $showingProgressChart) {
+            NavigationView {
+                ProgressChartView(exerciseName: exercise.name)
+                    .environmentObject(historyManager)
+                    .navigationTitle("Progressi \(exercise.name)")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button("Chiudi") {
+                                showingProgressChart = false
+                            }
+                        }
+                    }
+            }
+        }
     }
     
     private var emptyHistoryView: some View {
@@ -223,6 +263,8 @@ struct ExerciseDetailView: View {
             ForEach(exerciseHistory.prefix(5)) { workoutSet in
                 HistoryRow(workoutSet: workoutSet) {
                     deleteSet(workoutSet.id)
+                } onEdit: {
+                    showingEditSet = workoutSet
                 }
             }
             
@@ -285,6 +327,7 @@ struct StatView: View {
 struct HistoryRow: View {
     let workoutSet: WorkoutSet
     let onDelete: () -> Void
+    let onEdit: () -> Void
     @State private var showingDeleteAlert = false
     
     var body: some View {
@@ -321,14 +364,24 @@ struct HistoryRow: View {
                     .foregroundColor(.blue)
             }
             
-            Button {
-                showingDeleteAlert = true
+            // Menu Azioni invece del solo cestino
+            Menu {
+                Button {
+                    onEdit() // 👈 NUOVA AZIONE
+                } label: {
+                    Label("Modifica", systemImage: "pencil")
+                }
+                
+                Button(role: .destructive) {
+                    showingDeleteAlert = true
+                } label: {
+                    Label("Elimina", systemImage: "trash")
+                }
             } label: {
-                Image(systemName: "trash")
-                    .font(.system(size: 14))
-                    .foregroundColor(.red)
+                Image(systemName: "ellipsis.circle")
+                    .font(.system(size: 16))
+                    .foregroundColor(.gray)
             }
-            .buttonStyle(.plain)
         }
         .padding(12)
         .background(Color(.systemGray6))

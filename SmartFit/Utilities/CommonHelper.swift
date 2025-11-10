@@ -32,3 +32,12 @@ func headerIconColor(muscleGroup: String) -> Color {
     default: return .gray
     }
 }
+
+// MARK: - Form Validation
+func isFormValid(reps: Int?, weight: Double?) -> Bool {
+    guard let repsInt = reps, let weightDouble = weight else {
+        return false
+    }
+    
+    return repsInt > 0 && weightDouble >= 0
+}
