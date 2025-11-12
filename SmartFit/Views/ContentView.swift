@@ -10,14 +10,15 @@ import SwiftUI
 struct ContentView: View {
     
     // MARK: - Environment Objects
-    @StateObject private var dataService = WorkoutDataService()
+//    @StateObject private var dataService = WorkoutDataService()
+    @StateObject private var apiService = APIService()
     @StateObject private var historyManager = WorkoutHistoryManager()
     
     var body: some View {
         Group {
-            if dataService.isLoading {
+            if apiService.isLoading {
                 LoadingView()
-            } else if let workoutPlan = dataService.workoutPlan {
+            } else if let workoutPlan = apiService.workoutPlan {
                 MainTabView(workoutPlan: workoutPlan)
             } else {
                 ErrorView(message: "Errore caricamento dati", onRetry: retryLoadingData)
@@ -31,13 +32,13 @@ struct ContentView: View {
     // MARK: - Data Loading
     private func loadInitialData() {
         print("🎯 ContentView - Caricamento dati iniziali")
-        dataService.loadWorkoutData()
+        apiService.loadWorkoutData()
     }
     
     private func retryLoadingData() {
         print("🔄 ContentView - Riprovo caricamento dati")
-        dataService.isLoading = true
-        dataService.errorMessage = nil
+        apiService.isLoading = true
+        apiService.errorMessage = nil
         loadInitialData()
     }
 }
@@ -56,10 +57,16 @@ struct MainTabView: View {
                 }
             
             // Tab Progressi
-            ProgressOverviewView()
+            TestApiConnectionView()
                 .tabItem {
                     Image(systemName: "chart.line.uptrend.xyaxis")
                     Text("Progressi")
+                }
+            
+            TestPostApiView()
+                .tabItem {
+                    Image(systemName: "dumbbell.fill")
+                    Text("Save History")
                 }
             
             // Tab Impostazioni
