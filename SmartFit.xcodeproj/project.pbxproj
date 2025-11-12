@@ -10,9 +10,22 @@
 		ECF2380D2EBD05E500257AAB /* SmartFit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartFit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		ECB328F12EC24E090052EA39 /* Exceptions for "SmartFit" folder in "SmartFit" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = ECF2380C2EBD05E500257AAB /* SmartFit */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		ECF2380F2EBD05E500257AAB /* SmartFit */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				ECB328F12EC24E090052EA39 /* Exceptions for "SmartFit" folder in "SmartFit" target */,
+			);
 			path = SmartFit;
 			sourceTree = "<group>";
 		};
@@ -256,7 +269,8 @@
 				DEVELOPMENT_TEAM = 2DMW5G3LV8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = SmartFit/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -266,7 +280,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.2;
+				MARKETING_VERSION = 0.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = it.spritelab.SmartFit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -289,7 +303,8 @@
 				DEVELOPMENT_TEAM = 2DMW5G3LV8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = SmartFit/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -299,7 +314,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.2;
+				MARKETING_VERSION = 0.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = it.spritelab.SmartFit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
