@@ -81,7 +81,8 @@ class APIService: ObservableObject {
             return
         }
         
-        print("🔗 Iniziando chiamata API a: \(url)")
+        print("🔗 Iniziando chiamata POST a: \(url)")
+        isLoading = true
 
         // Crea la richiesta
         var request = URLRequest(url: url)
@@ -131,6 +132,7 @@ class APIService: ObservableObject {
                     
                     // Se la risposta contiene dati, puoi decodificarli qui
                     // self?.handlePostResponse(data)
+                    self?.isLoading = true
                 }
                 
                 print("✅ POST request completata con successo")

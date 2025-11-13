@@ -13,18 +13,21 @@ struct SmartFitApp: App {
     @StateObject private var historyManager = WorkoutHistoryManager()
         
     init() {
+        setupAppearance()
         configureNavigationBarAppearance()
     }
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LaunchScreenView()
                 .preferredColorScheme(.light)
                 .environmentObject(dataService)
                 .environmentObject(historyManager)
                 .onAppear {
                     print("🚀 GymBro avviato!")
                     print("📱 iOS Version: \(UIDevice.current.systemVersion)")
+                    // Forza il rendering immediato
+                    setupWindow()
                 }
         }
     }
@@ -48,5 +51,18 @@ struct SmartFitApp: App {
         
         // Colore pulsanti (es: freccia "indietro")
         UINavigationBar.appearance().tintColor = .white
+    }
+    
+    private func setupAppearance() {
+        // Configura l'aspetto globale per evitare ritardi
+        UIView.appearance().isMultipleTouchEnabled = false
+        UIView.appearance().isExclusiveTouch = true
+    }
+    
+    private func setupWindow() {
+        // Assicura che la window sia configurata correttamente
+        if let window = UIApplication.shared.windows.first {
+            window.backgroundColor = .systemBackground
+        }
     }
 }

@@ -20,9 +20,9 @@ struct TestPostApiView: View {
                                                         status: "prova"))
             }
             .buttonStyle(.borderedProminent)
-            //.disabled(apiService.isLoading)
+            .disabled(!apiService.isLoading)
             
-            if apiService.isLoading {
+            if !apiService.isLoading {
                 ProgressView("Invio dati...")
             }
             
