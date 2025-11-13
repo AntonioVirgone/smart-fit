@@ -37,7 +37,7 @@ struct LoadingView: View {
             startAnimations()
         }
     }
-        
+    
     // MARK: - App Icon
     private var appIcon: some View {
         ZStack {
