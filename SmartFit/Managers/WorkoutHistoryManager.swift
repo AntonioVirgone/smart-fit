@@ -82,6 +82,10 @@ class WorkoutHistoryManager: ObservableObject {
         return allHistory.filter { $0.date >= startDate && $0.date <= endDate }
     }
     
+    func getAllHistory() -> [String: [WorkoutSet]] {
+        return workoutHistory
+    }
+    
     // MARK: - Calcolo Progressi
     func calculateProgress(of exerciseName: String, period: TimeInterval = 30 * 24 * 3600) -> (weightProgress: Double, volumeProgress: Double) {
         let now = Date()
