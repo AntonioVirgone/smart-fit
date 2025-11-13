@@ -404,13 +404,13 @@ struct DayCircleView: View {
                     // Cerchio principale
                     Circle()
                         .fill(gradient)
-                        .frame(width: 120, height: 120)
+                        .frame(width: 80, height: 80)
                         .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
                         .scaleEffect(isAnimated ? 0.9 : 1.0)
                     
                     // Icona
                     Image(systemName: dayIcon)
-                        .font(.system(size: 30, weight: .medium))
+                        .font(.system(size: 20, weight: .medium))
                         .foregroundColor(.white)
                         .scaleEffect(isAnimated ? 1.1 : 1.0)
                 }
@@ -480,59 +480,6 @@ struct StatCircle: View {
             }
         }
         .frame(maxWidth: .infinity)
-    }
-}
-
-// MARK: - Componente Riga Menu
-struct MenuRow: View {
-    let icon: String
-    let title: String
-    let color: Color
-    let action: () -> Void
-    
-    @State private var isPressed = false
-    
-    var body: some View {
-        Button(action: {
-            // Feedback aptico
-            let generator = UIImpactFeedbackGenerator(style: .light)
-            generator.impactOccurred()
-            
-            action()
-        }) {
-            HStack(spacing: 16) {
-                ZStack {
-                    Circle()
-                        .fill(color.opacity(0.2))
-                        .frame(width: 40, height: 40)
-                    
-                    Image(systemName: icon)
-                        .font(.system(size: 18, weight: .medium))
-                        .foregroundColor(color)
-                }
-                
-                Text(title)
-                    .font(.system(size: 17, weight: .semibold))
-                    .foregroundColor(.white)
-                
-                Spacer()
-                
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(.white.opacity(0.6))
-            }
-            .padding(.horizontal, 24)
-            .padding(.vertical, 14)
-            .background(isPressed ? Color.white.opacity(0.1) : Color.clear)
-            .cornerRadius(12)
-            .scaleEffect(isPressed ? 0.98 : 1.0)
-        }
-        .buttonStyle(PlainButtonStyle())
-        .onLongPressGesture(minimumDuration: 0.1, maximumDistance: 50, pressing: { pressing in
-            withAnimation(.easeInOut(duration: 0.1)) {
-                isPressed = pressing
-            }
-        }, perform: {})
     }
 }
 
