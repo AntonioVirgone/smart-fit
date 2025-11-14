@@ -1,0 +1,294 @@
+{
+    "name": "Scheda JUST FIT ROGNO - Dimagrimento Principiante",
+    "days": [
+        {
+            "id": "6BA81EC1-8A2C-4A8D-B3F7-7C1E9F4A2B5C",
+            "name": "GIORNO 1 - Gambe",
+            "exercises": [
+                {
+                    "id": "1A2B3C4D-E5F6-7A8B-9C0D-E1F2A3B4C5D6",
+                    "name": "LEG EXTENSION",
+                    "description": "Esercizio per i quadricipiti - 4 serie x 10+12 ripetizioni - Recupero: 90 secondi",
+                    "imageName": "leg_extension",
+                    "muscleGroup": "Quadricipiti",
+                    "instructions": [
+                        "4 serie da 10+12 ripetizioni",
+                        "Recupero: 90 secondi tra le serie",
+                        "Siediti sulla macchina con schiena dritta",
+                        "Posiziona le caviglie sotto i cuscinetti",
+                        "Estendi le gambe fino a contrazione completa dei quadricipiti",
+                        "Torna lentamente alla posizione iniziale"
+                    ]
+                },
+                {
+                    "id": "2B3C4D5E-F6A7-8B9C-0D1E-F2A3B4C5D6E7",
+                    "name": "LEG PRESS ORIZZONTALE",
+                    "description": "Esercizio per i quadricipiti - 4 serie x 12 ripetizioni - Recupero: 80 secondi",
+                    "imageName": "leg_press",
+                    "muscleGroup": "Quadricipiti",
+                    "instructions": [
+                        "4 serie da 12 ripetizioni",
+                        "Recupero: 80 secondi tra le serie",
+                        "Posizionati sulla macchina leg press orizzontale",
+                        "Appoggia la schiena e i piedi sulla piattaforma",
+                        "Spingi il carico fino a estensione quasi completa delle gambe",
+                        "Torna lentamente alla posizione iniziale controllando il movimento"
+                    ]
+                },
+                {
+                    "id": "3C4D5E6F-A7B8-9C0D-1E2F-A3B4C5D6E7F8",
+                    "name": "ADDUCTOR MACHINE",
+                    "description": "Esercizio per gli adduttori - 3 serie x 15 ripetizioni - Recupero: 90 secondi",
+                    "imageName": "adductor_machine",
+                    "muscleGroup": "Adduttori",
+                    "instructions": [
+                        "3 serie da 15 ripetizioni",
+                        "Recupero: 90 secondi tra le serie",
+                        "Siediti sulla macchina per adduttori",
+                        "Posiziona le gambe sui supporti laterali",
+                        "Unisci le gambe contraendo gli adduttori",
+                        "Torna lentamente alla posizione iniziale"
+                    ]
+                },
+                {
+                    "id": "4D5E6F7A-B8C9-0D1E-2F3A-B4C5D6E7F8A9",
+                    "name": "LEG CURL IN PIEDI AL CAVO BASSO",
+                    "description": "Esercizio per i femorali - 4 serie x 10+10 ripetizioni - Recupero: 90 secondi",
+                    "imageName": "standing_leg_curl",
+                    "muscleGroup": "Femorali",
+                    "instructions": [
+                        "4 serie da 10+10 ripetizioni",
+                        "Recupero: 90 secondi tra le serie",
+                        "Posizionati in piedi di fronte al cavo basso",
+                        "Fissa la caviglia al cavo con l'apposito supporto",
+                        "Fletti la gamba portando il tallone verso i glutei",
+                        "Torna lentamente alla posizione iniziale"
+                    ]
+                },
+                {
+                    "id": "5E6F7A8B-C9D0-1E2F-3A4B-C5D6E7F8A9B0",
+                    "name": "ABDUCTOR MACHINE",
+                    "description": "Esercizio per gli abduttori - 4 serie x 15 ripetizioni - Recupero: 90 secondi",
+                    "imageName": "abductor_machine",
+                    "muscleGroup": "Abduttori",
+                    "instructions": [
+                        "4 serie da 15 ripetizioni",
+                        "Recupero: 90 secondi tra le serie",
+                        "Siediti sulla macchina per abduttori",
+                        "Posiziona le gambe sui supporti interni",
+                        "Apri le gambe contraendo gli abduttori",
+                        "Torna lentamente alla posizione iniziale"
+                    ]
+                },
+                {
+                    "id": "6F7A8B9C-D0E1-2F3A-4B5C-D6E7F8A9B0C1",
+                    "name": "CORSA SU TAPPETO",
+                    "description": "Esercizio cardio - 20 minuti di camminata veloce",
+                    "imageName": "treadmill",
+                    "muscleGroup": "Cardio",
+                    "instructions": [
+                        "20 minuti di camminata veloce continua",
+                        "Mantieni un ritmo costante e sostenuto",
+                        "Posizionati sul tappeto con postura eretta",
+                        "Inizia a camminare a velocità moderata",
+                        "Mantieni una frequenza cardiaca adeguata per il dimagrimento"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "9C0D1E2F-A3B4-5C6D-7E8F-A9B0C1D2E3F4",
+            "name": "GIORNO 2 - Dorsali e Bicipiti",
+            "exercises": [
+                {
+                    "id": "A0B1C2D3-E4F5-6A7B-8C9D-E0F1A2B3C4D5",
+                    "name": "LAT MACHINE AVANTI",
+                    "description": "Esercizio per i dorsali - 4 serie x 8/10 ripetizioni - Recupero: 80 secondi",
+                    "imageName": "lat_pulldown",
+                    "muscleGroup": "Dorsali",
+                    "instructions": [
+                        "4 serie da 8/10 ripetizioni",
+                        "Recupero: 80 secondi tra le serie",
+                        "Siediti sulla macchina con cosce bloccate",
+                        "Impugna la barra larga con presa prona",
+                        "Tira la barra verso il petto avvicinando le scapole",
+                        "Torna lentamente alla posizione iniziale"
+                    ]
+                },
+                {
+                    "id": "B1C2D3E4-F5A6-7B8C-9D0E-F1A2B3C4D5E6",
+                    "name": "REMATORE ALLA UOVA BOVIA CARICO LIBERO",
+                    "description": "Esercizio per i dorsali - 4 serie x 12 ripetizioni - Recupero: 90 secondi",
+                    "imageName": "t_bar_row",
+                    "muscleGroup": "Dorsali",
+                    "instructions": [
+                        "4 serie da 12 ripetizioni",
+                        "Recupero: 90 secondi tra le serie",
+                        "Posizionati sulla macchina rematore",
+                        "Impugna le maniglie con presa appropriata",
+                        "Tira il carico verso il petto mantenendo schiena dritta",
+                        "Contrai i dorsali al punto di massima contrazione",
+                        "Torna lentamente alla posizione iniziale"
+                    ]
+                },
+                {
+                    "id": "C2D3E4F5-A6B7-8C9D-0E1F-A2B3C4D5E6F7",
+                    "name": "PULLEY BASSO TRIMAGOLO",
+                    "description": "Esercizio per i dorsali - 4 serie x 10 ripetizioni - Recupero: 80 secondi",
+                    "imageName": "low_pulley",
+                    "muscleGroup": "Dorsali",
+                    "instructions": [
+                        "4 serie da 10 ripetizioni",
+                        "Recupero: 80 secondi tra le serie",
+                        "Posizionati di fronte al pulley basso",
+                        "Impugna la triangolo con presa neutra",
+                        "Tira verso l'addome mantenendo gomiti alti",
+                        "Contrai i dorsali al punto di massima contrazione",
+                        "Torna lentamente alla posizione iniziale"
+                    ]
+                },
+                {
+                    "id": "D3E4F5A6-B7C8-9D0E-1F2A-B3C4D5E6F7A8",
+                    "name": "CURL HAMMER AL CAVO BASSO: CORDA",
+                    "description": "Esercizio per i bicipiti - 4 serie x 8/10 ripetizioni - Recupero: 90 secondi",
+                    "imageName": "cable_hammer_curl",
+                    "muscleGroup": "Bicipiti",
+                    "instructions": [
+                        "4 serie da 8/10 ripetizioni",
+                        "Recupero: 90 secondi tra le serie",
+                        "Posizionati di fronte al cavo basso",
+                        "Impugna la corda con presa a martello",
+                        "Esegui curl mantenendo i gomiti fermi lungo i fianchi",
+                        "Contrai i bicipiti al punto di massima contrazione",
+                        "Torna lentamente alla posizione iniziale"
+                    ]
+                },
+                {
+                    "id": "E4F5A6B7-C8D9-0E1F-2A3B-C4D5E6F7A8B9",
+                    "name": "CURL IN PIEDI 2 MANUBRI",
+                    "description": "Esercizio per i bicipiti - 3 serie x 10 ripetizioni - Recupero: 90 secondi",
+                    "imageName": "dumbbell_curl",
+                    "muscleGroup": "Bicipiti",
+                    "instructions": [
+                        "3 serie da 10 ripetizioni",
+                        "Recupero: 90 secondi tra le serie",
+                        "In piedi con schiena dritta",
+                        "Impugna i manubri con palmi in avanti",
+                        "Solleva entrambi i manubri contemporaneamente",
+                        "Contrai i bicipiti al punto di massima contrazione",
+                        "Abbassa lentamente i manubri controllando il movimento"
+                    ]
+                },
+                {
+                    "id": "F5A6B7C8-D9E0-1F2A-3B4C-D5E6F7A8B9C0",
+                    "name": "CORSA SU TAPPETO",
+                    "description": "Esercizio cardio - 20 minuti di camminata veloce",
+                    "imageName": "treadmill",
+                    "muscleGroup": "Cardio",
+                    "instructions": [
+                        "20 minuti di camminata veloce continua",
+                        "Mantieni un ritmo costante e sostenuto",
+                        "Posizionati sul tappeto con postura eretta",
+                        "Inizia a camminare a velocità moderata",
+                        "Mantieni una frequenza cardiaca adeguata per il dimagrimento"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "b6a1a7b4-15e4-4d3c-9e2b-0e3f6a9a9a15",
+            "name": "GIORNO 3 - Spalle e Tricipiti",
+            "exercises": [
+                {
+                    "id": "b13c9a78-89de-4a4d-b2a9-b2dcd0d22a80",
+                    "name": "SHOULDER PRESS",
+                    "description": "Esercizio per le spalle - 4 serie x 8/10 ripetizioni - Recupero: 90 secondi",
+                    "imageName": "shoulder_press",
+                    "muscleGroup": "Spalle",
+                    "instructions": [
+                        "4 serie da 8/10 ripetizioni",
+                        "Recupero: 90 secondi tra le serie",
+                        "Siediti sulla macchina con schiena dritta",
+                        "Impugna le maniglie all'altezza delle spalle",
+                        "Spingi verso l'alto fino a braccia distese",
+                        "Abbassa lentamente il carico controllando il movimento"
+                    ]
+                },
+                {
+                    "id": "dbbde89e-c839-44a3-bb14-8c8d5caa5c62",
+                    "name": "VOLARE IN PIEDI 2 MANUBRI",
+                    "description": "Esercizio per le spalle - 4 serie x 12 ripetizioni - Recupero: 90 secondi",
+                    "imageName": "lateral_raise",
+                    "muscleGroup": "Spalle",
+                    "instructions": [
+                        "4 serie da 12 ripetizioni",
+                        "Recupero: 90 secondi tra le serie",
+                        "In piedi con schiena dritta",
+                        "Impugna i manubri con palmi rivolti verso il corpo",
+                        "Solleva i manubri lateralmente fino all'altezza delle spalle",
+                        "Abbassa lentamente i manubri controllando il movimento"
+                    ]
+                },
+                {
+                    "id": "6a14f870-1b3d-42cf-8f07-3b71405885f5",
+                    "name": "APERTURE PECK BACK",
+                    "description": "Esercizio per le spalle - 3 serie x 15 ripetizioni - Recupero: 90 secondi",
+                    "imageName": "reverse_pec_deck",
+                    "muscleGroup": "Spalle",
+                    "instructions": [
+                        "3 serie da 15 ripetizioni",
+                        "Recupero: 90 secondi tra le serie",
+                        "Siediti sulla macchina pect deck al contrario",
+                        "Appoggia il petto contro lo schienale",
+                        "Apri le braccia contraendo i deltoidi posteriori",
+                        "Torna lentamente alla posizione iniziale"
+                    ]
+                },
+                {
+                    "id": "f8e7b010-4266-4e65-8a1e-46c4eb31941d",
+                    "name": "FRENCH PRESS PANCA PIANA 2 MANUBRI",
+                    "description": "Esercizio per i tricipiti - 4 serie x 8/10 ripetizioni - Recupero: 90 secondi",
+                    "imageName": "french_press",
+                    "muscleGroup": "Tricipiti",
+                    "instructions": [
+                        "4 serie da 8/10 ripetizioni",
+                        "Recupero: 90 secondi tra le serie",
+                        "Sdraiati sulla panca piana",
+                        "Solleva i manubri sopra il petto con braccia distese",
+                        "Abbassa i manubri dietro la testa piegando solo i gomiti",
+                        "Estendi le braccia tornando alla posizione iniziale"
+                    ]
+                },
+                {
+                    "id": "bcb3a7a0-c037-4d94-9ff2-52066b573e08",
+                    "name": "ESTENSIONI AL CAVO ALTO",
+                    "description": "Esercizio per i tricipiti - 4 serie x 12 ripetizioni con barra dritta - Recupero: 90 secondi",
+                    "imageName": "cable_pushdown",
+                    "muscleGroup": "Tricipiti",
+                    "instructions": [
+                        "4 serie da 12 ripetizioni",
+                        "Recupero: 90 secondi tra le serie",
+                        "Posizionati di fronte alla macchina con cavo alto",
+                        "Impugna la barra dritta con presa prona",
+                        "Mantieni i gomiti fermi lungo i fianchi",
+                        "Estendi gli avambracci verso il basso contraendo i tricipiti"
+                    ]
+                },
+                {
+                    "id": "62c4e7af-61a7-4459-9b7c-4cbe6b69b40e",
+                    "name": "CORSA SU TAPPETO",
+                    "description": "Esercizio cardio - 20 minuti di camminata veloce",
+                    "imageName": "treadmill",
+                    "muscleGroup": "Cardio",
+                    "instructions": [
+                        "20 minuti di camminata veloce continua",
+                        "Mantieni un ritmo costante e sostenuto",
+                        "Posizionati sul tappeto con postura eretta",
+                        "Inizia a camminare a velocità moderata",
+                        "Mantieni una frequenza cardiaca adeguata per il dimagrimento"
+                    ]
+                }
+            ]
+        }
+    ]
+}

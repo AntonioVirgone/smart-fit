@@ -15,7 +15,8 @@ struct MainTabView: View {
     var body: some View {
         TabView {
             // Tab Allenamento
-            WorkoutDaysListView(workoutPlan: workoutPlan)
+            //WorkoutDaysListView(workoutPlan: workoutPlan)
+            NewHomeView(workoutPlan: workoutPlan)
                 .tabItem {
                     Image(systemName: "dumbbell.fill")
                     Text("Allenamento")

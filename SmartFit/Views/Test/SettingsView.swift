@@ -16,49 +16,42 @@ struct SettingsView: View {
     @State private var showingResetSuccess = false
     @State private var showingExportSheet = false
     @State private var exportData: String = ""
-
+    
     private var appVersion: (String, String) {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-"
         let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "-"
         return (version, build)
     }
-
+    
     // MARK: - Body
     var body: some View {
-        NavigationView {
-            List {
-                // Sezione Dati
-                dataSection
-                
-                // Sezione Informazioni
-                infoSection
+        List {
+            // Sezione Dati
+            dataSection
+            
+            // Sezione Informazioni
+            infoSection
+        }
+        .scrollContentBackground(.hidden) // Nasconde lo sfondo bianco di default
+        .sheet(isPresented: $showingExportSheet) {
+            ExportDataView(exportData: exportData)
+        }
+        // Alert per reset dati
+        .alert("Reset Storico", isPresented: $showingResetAlert) {
+            Button("Annulla", role: .cancel) {
+                print("❌ Reset annullato dall'utente")
             }
-            .scrollContentBackground(.hidden) // Nasconde lo sfondo bianco di default
-            .background(
-                backgroundGradient
-            )
-            .navigationTitle("Impostazioni")
-            .navigationBarTitleDisplayMode(.large)
-            .sheet(isPresented: $showingExportSheet) {
-                ExportDataView(exportData: exportData)
+            Button("Reset", role: .destructive) {
+                resetAllData()
             }
-            // Alert per reset dati
-            .alert("Reset Storico", isPresented: $showingResetAlert) {
-                Button("Annulla", role: .cancel) {
-                    print("❌ Reset annullato dall'utente")
-                }
-                Button("Reset", role: .destructive) {
-                    resetAllData()
-                }
-            } message: {
-                Text("Sei sicuro di voler cancellare tutto lo storico degli allenamenti?\n\nQuesta azione non può essere annullata e tutti i tuoi dati andranno persi.")
-            }
-            // Alert di conferma reset
-            .alert("Reset Completato", isPresented: $showingResetSuccess) {
-                Button("OK", role: .cancel) { }
-            } message: {
-                Text("Tutti i dati dello storico sono stati cancellati con successo.")
-            }
+        } message: {
+            Text("Sei sicuro di voler cancellare tutto lo storico degli allenamenti?\n\nQuesta azione non può essere annullata e tutti i tuoi dati andranno persi.")
+        }
+        // Alert di conferma reset
+        .alert("Reset Completato", isPresented: $showingResetSuccess) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("Tutti i dati dello storico sono stati cancellati con successo.")
         }
     }
     
