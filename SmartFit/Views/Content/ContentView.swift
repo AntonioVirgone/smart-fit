@@ -63,6 +63,8 @@ struct ContentView: View {
                                 TestApiConnectionView()
                             case .settings:
                                 SettingsView()
+                            case .history:
+                                HistoryView()
                             }
                         }
                         // 👈 MENU OVERLAY A LIVELLO DI ZSTACK - sopra tutto

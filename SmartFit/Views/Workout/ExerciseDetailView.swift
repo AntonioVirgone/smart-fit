@@ -22,7 +22,8 @@ struct ExerciseDetailView: View {
     @State private var newWeight = "50"
     @State private var newNotes = ""
     @State private var isHeating = false
-
+    @State private var intensity: WorkoutIntensity = .moderate
+    
     // MARK: - Computed Properties
     private var exerciseHistory: [WorkoutSet] {
         historyManager.getHistory(for: exercise.name)
@@ -66,6 +67,7 @@ struct ExerciseDetailView: View {
                 notes: $newNotes,
                 isPresented: $showingAddSet,
                 isHeating: $isHeating,
+                selected: $intensity,
                 onSave: addNewSet
             )
         }
@@ -288,7 +290,12 @@ struct ExerciseDetailView: View {
             return
         }
         
-        historyManager.addSet(for: exercise.name, reps: reps, weight: weight, notes: newNotes.isEmpty ? nil : newNotes, type: isHeating ? .heating : .series)
+        historyManager.addSet(for: exercise.name,
+                              reps: reps,
+                              weight: weight,
+                              notes: newNotes.isEmpty ? nil : newNotes,
+                              type: isHeating ? .heating : .series,
+                              intensity: intensity)
         
         // Reset form
         newReps = "\(reps)"
@@ -360,7 +367,7 @@ struct HistoryRow: View {
             
             VStack(alignment: .trailing, spacing: 2) {
                 if workoutSet.type != nil {
-                    Text(workoutSet.type == .series ? "Series" : "Repetizioni")
+                    Text(workoutSet.type == .series ? "Serie" : "Riscaldamento")
                 }
                 Text("\(workoutSet.reps) reps")
                     .font(.system(size: 14, weight: .medium))
@@ -391,13 +398,22 @@ struct HistoryRow: View {
             }
         }
         .padding(12)
-        .background(Color(.systemGray6))
+        .background(colorSelector(level: workoutSet.intensity ?? WorkoutIntensity.light))
         .cornerRadius(8)
         .alert("Elimina Serie", isPresented: $showingDeleteAlert) {
             Button("Annulla", role: .cancel) { }
             Button("Elimina", role: .destructive, action: onDelete)
         } message: {
             Text("Vuoi eliminare questa serie?")
+        }
+    }
+    
+    
+    private func colorSelector(level: WorkoutIntensity) -> Color {
+        switch level {
+        case .light: return Color.blue.opacity(0.2)
+        case .moderate: return Color.purple.opacity(0.2)
+        case .intense: return Color.red.opacity(0.2)
         }
     }
     

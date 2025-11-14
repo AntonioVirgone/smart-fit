@@ -24,8 +24,8 @@ class WorkoutHistoryManager: ObservableObject {
     }
     
     // MARK: - Aggiungi nuova serie
-    func addSet(for exerciseName: String, reps: Int, weight: Double, notes: String? = nil, type: WorkoutType? = nil) {
-        let newSet = WorkoutSet(reps: reps, weight: weight, notes: notes, type: type)
+    func addSet(for exerciseName: String, reps: Int, weight: Double, notes: String? = nil, type: WorkoutType? = nil, intensity: WorkoutIntensity? = nil) {
+        let newSet = WorkoutSet(reps: reps, weight: weight, notes: notes, type: type, intensity: intensity)
         
         // Inizializzo l'array se non esiste
         if workoutHistory[exerciseName] == nil {

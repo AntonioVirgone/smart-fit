@@ -17,7 +17,8 @@ struct AddSetView: View {
     @Binding var notes: String
     @Binding var isPresented: Bool
     @Binding var isHeating: Bool
-    
+    @Binding var selected: WorkoutIntensity
+
     let onSave: () -> Void
     
     @State private var showError = false
@@ -33,6 +34,9 @@ struct AddSetView: View {
                 // Sezione scelta tipo
                 toggleHeating
                 
+                // Sezione intensità
+                intensitySelector
+
                 // Sezione dati serie
                 dataSection
                 
@@ -79,6 +83,40 @@ struct AddSetView: View {
         }
     }
     
+    private var intensitySelector: some View {
+        Section(header: Text("Intensità")) {
+            HStack(spacing: 12) {
+                ForEach(WorkoutIntensity.allCases, id: \.self) { level in
+                    Text(level.rawValue)
+                        .font(.system(size: 12))
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 20)
+                        .background(
+                            colorSelector(level: level)
+                        )
+                        .foregroundStyle(selected == level ? .white : .primary)
+                        .cornerRadius(12)
+                        .onTapGesture {
+                            selected = level
+                        }
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
+            .animation(.spring(), value: selected)
+        }
+    }
+    
+    private func colorSelector(level: WorkoutIntensity) -> Color {
+        if selected == level {
+            switch level {
+            case .light: return Color.blue
+            case .moderate: return Color.purple
+            case .intense: return Color.red
+            }
+        }
+        return Color.gray.opacity(0.2)
+    }
+    
     private var toggleHeating: some View {
         Section(header: Text("Tipo Serie")) {
             Toggle("Riscaldamento", isOn: $isHeating).padding()
@@ -109,11 +147,11 @@ struct AddSetView: View {
                 TextField("Es: 50.5", text: Binding(get: { weight }, set: { newValue in
                     weight = newValue.replacingOccurrences(of: ",", with: ".")
                 }))
-                    .keyboardType(.decimalPad)
-                    .focused($focusedField, equals: .weight)
-                    .padding(8)
-                    .background(Color(.systemGray6))
-                    .cornerRadius(8)
+                .keyboardType(.decimalPad)
+                .focused($focusedField, equals: .weight)
+                .padding(8)
+                .background(Color(.systemGray6))
+                .cornerRadius(8)
             }
             .padding(.vertical, 4)
         }

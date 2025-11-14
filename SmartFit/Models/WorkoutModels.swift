@@ -59,23 +59,33 @@ struct WorkoutSet: Identifiable, Codable, Hashable {
     var weight: Double
     var notes: String?
     let type: WorkoutType?
+    var intensity: WorkoutIntensity?
 
     init(id: UUID = UUID(),
          date: Date = Date(),
          reps: Int,
          weight: Double,
          notes: String? = nil,
-         type: WorkoutType? = nil) {
+         type: WorkoutType? = nil,
+         intensity: WorkoutIntensity? = nil
+    ) {
         self.id = id
         self.date = date
         self.reps = reps
         self.weight = weight
         self.notes = notes
         self.type = type
+        self.intensity = intensity
     }
 }
 
 enum WorkoutType: Codable {
     case heating
     case series
+}
+
+enum WorkoutIntensity: String, Codable, CaseIterable {
+    case light = "Leggero"
+    case moderate = "Moderato"
+    case intense = "Intenso"
 }
