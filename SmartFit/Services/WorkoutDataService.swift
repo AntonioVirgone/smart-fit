@@ -20,7 +20,7 @@ class WorkoutDataService: ObservableObject {
         print("🔄 Inizio caricamento dati...")
         
         // 1. Trova il file json nel bundle
-        guard let url = Bundle.main.url(forResource: "workoutData_grazi", withExtension: "json") else {
+        guard let url = Bundle.main.url(forResource: "workoutData", withExtension: "json") else {
             print("File non trovato")
             return
         }

@@ -19,26 +19,32 @@ struct ContentView: View {
     @State private var currentView: AppView = .home // 👈 Stato corrente
     @State private var showingMenu = false
     
+    var isLoading: Bool {
+        #if targetEnvironment(simulator)
+        return apiService.isLoading
+        #else
+        return dataService.isLoading
+        #endif
+    }
+
+    var currentWorkoutPlan: WorkoutPlan? {
+        #if targetEnvironment(simulator)
+        return apiService.workoutPlan
+        #else
+        return dataService.workoutPlan
+        #endif
+    }
+    
     var body: some View {
         ZStack {
             // 🔹 Sfondo gradiente
             backgroundGradient
             
-            
             // 🔹 Contenuto principale
             Group {
-#if !targetEnvironment(simulator)
-                if dataService.isLoading {
+                if isLoading {
                     LoadingView()
-                } else if let workoutPlan = dataService.workoutPlan {
-                    MainTabView(workoutPlan: workoutPlan)
-                } else {
-                    ErrorView(message: "Errore caricamento dati", onRetry: retryLoadingData)
-                }
-#else
-                if apiService.isLoading {
-                    LoadingView()
-                } else if let workoutPlan = apiService.workoutPlan {
+                } else if let workoutPlan = currentWorkoutPlan {
                     ZStack {
                         VStack(spacing: 16) {
                             // Header con Logo
@@ -70,7 +76,6 @@ struct ContentView: View {
                 } else {
                     ErrorView(message: "Errore caricamento dati", onRetry: retryLoadingData)
                 }
-#endif
             }
         }
         .onAppear {
