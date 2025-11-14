@@ -24,8 +24,8 @@ class WorkoutHistoryManager: ObservableObject {
     }
     
     // MARK: - Aggiungi nuova serie
-    func addSet(for exerciseName: String, reps: Int, weight: Double, notes: String? = nil) {
-        let newSet = WorkoutSet(reps: reps, weight: weight, notes: notes)
+    func addSet(for exerciseName: String, reps: Int, weight: Double, notes: String? = nil, type: WorkoutType? = nil, intensity: WorkoutIntensity? = nil) {
+        let newSet = WorkoutSet(reps: reps, weight: weight, notes: notes, type: type, intensity: intensity)
         
         // Inizializzo l'array se non esiste
         if workoutHistory[exerciseName] == nil {
@@ -80,6 +80,10 @@ class WorkoutHistoryManager: ObservableObject {
     func getHistoryInDateRange(for exerciseName: String, from startDate: Date, endDate: Date) -> [WorkoutSet] {
         let allHistory = getHistory(for: exerciseName)
         return allHistory.filter { $0.date >= startDate && $0.date <= endDate }
+    }
+    
+    func getAllHistory() -> [String: [WorkoutSet]] {
+        return workoutHistory
     }
     
     // MARK: - Calcolo Progressi

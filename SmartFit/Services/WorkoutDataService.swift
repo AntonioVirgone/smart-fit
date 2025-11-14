@@ -19,10 +19,6 @@ class WorkoutDataService: ObservableObject {
     func loadWorkoutData() {
         print("🔄 Inizio caricamento dati...")
         
-        loadFromJson()
-    }
-    
-    private func loadFromJson() {
         // 1. Trova il file json nel bundle
         guard let url = Bundle.main.url(forResource: "workoutData", withExtension: "json") else {
             print("File non trovato")

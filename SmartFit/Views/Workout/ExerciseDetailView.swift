@@ -11,7 +11,9 @@ import SwiftUI
 struct ExerciseDetailView: View {
     // MARK: - Properties
     let exercise: Exercise
+    
     @EnvironmentObject var historyManager: WorkoutHistoryManager
+    
     @State private var showingAddSet = false
     @State private var showingEditSet: WorkoutSet? = nil
     @State private var showingProgressChart = false
@@ -19,6 +21,8 @@ struct ExerciseDetailView: View {
     @State private var newReps = "8"
     @State private var newWeight = "50"
     @State private var newNotes = ""
+    @State private var isHeating = false
+    @State private var intensity: WorkoutIntensity = .moderate
     
     // MARK: - Computed Properties
     private var exerciseHistory: [WorkoutSet] {
@@ -62,6 +66,8 @@ struct ExerciseDetailView: View {
                 weight: $newWeight,
                 notes: $newNotes,
                 isPresented: $showingAddSet,
+                isHeating: $isHeating,
+                selected: $intensity,
                 onSave: addNewSet
             )
         }
@@ -284,11 +290,16 @@ struct ExerciseDetailView: View {
             return
         }
         
-        historyManager.addSet(for: exercise.name, reps: reps, weight: weight, notes: newNotes.isEmpty ? nil : newNotes)
+        historyManager.addSet(for: exercise.name,
+                              reps: reps,
+                              weight: weight,
+                              notes: newNotes.isEmpty ? nil : newNotes,
+                              type: isHeating ? .heating : .series,
+                              intensity: intensity)
         
         // Reset form
-        newReps = "8"
-        newWeight = "50"
+        newReps = "\(reps)"
+        newWeight = "\(weight)"
         newNotes = ""
     }
     
@@ -355,6 +366,9 @@ struct HistoryRow: View {
             Spacer()
             
             VStack(alignment: .trailing, spacing: 2) {
+                if workoutSet.type != nil {
+                    Text(workoutSet.type == .series ? "Serie" : "Riscaldamento")
+                }
                 Text("\(workoutSet.reps) reps")
                     .font(.system(size: 14, weight: .medium))
                     .foregroundColor(.primary)
@@ -384,13 +398,22 @@ struct HistoryRow: View {
             }
         }
         .padding(12)
-        .background(Color(.systemGray6))
+        .background(colorSelector(level: workoutSet.intensity ?? WorkoutIntensity.light))
         .cornerRadius(8)
         .alert("Elimina Serie", isPresented: $showingDeleteAlert) {
             Button("Annulla", role: .cancel) { }
             Button("Elimina", role: .destructive, action: onDelete)
         } message: {
             Text("Vuoi eliminare questa serie?")
+        }
+    }
+    
+    
+    private func colorSelector(level: WorkoutIntensity) -> Color {
+        switch level {
+        case .light: return Color.blue.opacity(0.2)
+        case .moderate: return Color.purple.opacity(0.2)
+        case .intense: return Color.red.opacity(0.2)
         }
     }
     
