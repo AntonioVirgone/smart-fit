@@ -58,16 +58,24 @@ struct WorkoutSet: Identifiable, Codable, Hashable {
     var reps: Int
     var weight: Double
     var notes: String?
-    
+    let type: WorkoutType?
+
     init(id: UUID = UUID(),
          date: Date = Date(),
          reps: Int,
          weight: Double,
-         notes: String? = nil) {
+         notes: String? = nil,
+         type: WorkoutType? = nil) {
         self.id = id
         self.date = date
         self.reps = reps
         self.weight = weight
         self.notes = notes
+        self.type = type
     }
+}
+
+enum WorkoutType: Codable {
+    case heating
+    case series
 }

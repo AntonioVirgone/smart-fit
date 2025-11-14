@@ -11,7 +11,9 @@ import SwiftUI
 struct ExerciseDetailView: View {
     // MARK: - Properties
     let exercise: Exercise
+    
     @EnvironmentObject var historyManager: WorkoutHistoryManager
+    
     @State private var showingAddSet = false
     @State private var showingEditSet: WorkoutSet? = nil
     @State private var showingProgressChart = false
@@ -19,7 +21,8 @@ struct ExerciseDetailView: View {
     @State private var newReps = "8"
     @State private var newWeight = "50"
     @State private var newNotes = ""
-    
+    @State private var isHeating = false
+
     // MARK: - Computed Properties
     private var exerciseHistory: [WorkoutSet] {
         historyManager.getHistory(for: exercise.name)
@@ -62,6 +65,7 @@ struct ExerciseDetailView: View {
                 weight: $newWeight,
                 notes: $newNotes,
                 isPresented: $showingAddSet,
+                isHeating: $isHeating,
                 onSave: addNewSet
             )
         }
@@ -284,11 +288,11 @@ struct ExerciseDetailView: View {
             return
         }
         
-        historyManager.addSet(for: exercise.name, reps: reps, weight: weight, notes: newNotes.isEmpty ? nil : newNotes)
+        historyManager.addSet(for: exercise.name, reps: reps, weight: weight, notes: newNotes.isEmpty ? nil : newNotes, type: isHeating ? .heating : .series)
         
         // Reset form
-        newReps = "8"
-        newWeight = "50"
+        newReps = "\(reps)"
+        newWeight = "\(weight)"
         newNotes = ""
     }
     
@@ -355,6 +359,9 @@ struct HistoryRow: View {
             Spacer()
             
             VStack(alignment: .trailing, spacing: 2) {
+                if workoutSet.type != nil {
+                    Text(workoutSet.type == .series ? "Series" : "Repetizioni")
+                }
                 Text("\(workoutSet.reps) reps")
                     .font(.system(size: 14, weight: .medium))
                     .foregroundColor(.primary)

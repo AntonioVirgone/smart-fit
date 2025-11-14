@@ -16,6 +16,8 @@ struct AddSetView: View {
     @Binding var weight: String
     @Binding var notes: String
     @Binding var isPresented: Bool
+    @Binding var isHeating: Bool
+    
     let onSave: () -> Void
     
     @State private var showError = false
@@ -28,6 +30,9 @@ struct AddSetView: View {
     var body: some View {
         NavigationView{
             Form {
+                // Sezione scelta tipo
+                toggleHeating
+                
                 // Sezione dati serie
                 dataSection
                 
@@ -74,6 +79,12 @@ struct AddSetView: View {
         }
     }
     
+    private var toggleHeating: some View {
+        Section(header: Text("Tipo Serie")) {
+            Toggle("Riscaldamento", isOn: $isHeating).padding()
+        }
+    }
+    
     // MARK: - Data Section
     private var dataSection: some View {
         Section(header: Text("Dati Serie")) {
@@ -95,7 +106,9 @@ struct AddSetView: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
                 
-                TextField("Es: 50.5", text: $weight)
+                TextField("Es: 50.5", text: Binding(get: { weight }, set: { newValue in
+                    weight = newValue.replacingOccurrences(of: ",", with: ".")
+                }))
                     .keyboardType(.decimalPad)
                     .focused($focusedField, equals: .weight)
                     .padding(8)
