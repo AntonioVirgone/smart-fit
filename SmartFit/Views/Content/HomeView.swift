@@ -64,7 +64,6 @@ struct HomeView: View {
         }
     }
     
-    
     // MARK: - Statistiche Overview
     private var statsOverviewView: some View {
         VStack {
