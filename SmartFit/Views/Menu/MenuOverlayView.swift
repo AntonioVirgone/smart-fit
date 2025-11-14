@@ -14,6 +14,7 @@ enum AppView {
     case saveHistory
     case getWorkputData
     case settings
+    case history
 }
 
 // MARK: - Menu Overlay
@@ -76,10 +77,11 @@ struct MenuOverlayView: View {
                         
                         MenuRow(
                             icon: "chart.bar.fill",
-                            title: "Statistiche Avanzate",
+                            title: "History",
                             color: .green,
                             action: {
                                 withAnimation {
+                                    currentView = .history
                                     showingMenu = false
                                 }
                             }
