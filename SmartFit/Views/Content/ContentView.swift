@@ -14,10 +14,12 @@ struct ContentView: View {
     
     // MARK: - Environment Objects
     @StateObject private var dataService = WorkoutDataService()
-    @StateObject private var apiService = APIService()
+    @StateObject private var apiService = WorkoutApiService()
     
     @State private var currentView: AppView = .home // 👈 Stato corrente
     @State private var showingMenu = false
+    
+    var isLogged: Bool = false
     
     var isLoading: Bool {
         #if targetEnvironment(simulator)
@@ -42,41 +44,45 @@ struct ContentView: View {
             
             // 🔹 Contenuto principale
             Group {
-                if isLoading {
-                    LoadingView()
-                } else if let workoutPlan = currentWorkoutPlan {
-                    ZStack {
-                        VStack(spacing: 16) {
-                            // Header con Logo
-                            headerView
-                            
-                            Spacer()
-                            
-                            // HomeView(workoutPlan: workoutPlan)
-                            // View Corrente basata sullo stato
-                            switch currentView {
-                            case .home:
-                                HomeView(workoutPlan: workoutPlan, showingMenu: $showingMenu)
-                            case .saveHistory:
-                                TestPostApiView()
-                            case .getWorkputData:
-                                TestApiConnectionView()
-                            case .settings:
-                                SettingsView()
-                            case .history:
-                                HistoryView()
+                if isLogged {
+                    if isLoading {
+                        LoadingView()
+                    } else if let workoutPlan = currentWorkoutPlan {
+                        ZStack {
+                            VStack(spacing: 16) {
+                                // Header con Logo
+                                headerView
+                                
+                                Spacer()
+                                
+                                // HomeView(workoutPlan: workoutPlan)
+                                // View Corrente basata sullo stato
+                                switch currentView {
+                                case .home:
+                                    HomeView(workoutPlan: workoutPlan, showingMenu: $showingMenu)
+                                case .saveHistory:
+                                    TestPostApiView()
+                                case .getWorkputData:
+                                    TestApiConnectionView()
+                                case .settings:
+                                    SettingsView()
+                                case .history:
+                                    HistoryView()
+                                }
+                            }
+                            // 👈 MENU OVERLAY A LIVELLO DI ZSTACK - sopra tutto
+                            if showingMenu {
+                                MenuOverlayView(
+                                    showingMenu: $showingMenu,
+                                    currentView: $currentView // 👈 Passa il binding
+                                )
                             }
                         }
-                        // 👈 MENU OVERLAY A LIVELLO DI ZSTACK - sopra tutto
-                        if showingMenu {
-                            MenuOverlayView(
-                                showingMenu: $showingMenu,
-                                currentView: $currentView // 👈 Passa il binding
-                            )
-                        }
+                    } else {
+                        ErrorView(message: "Errore caricamento dati", onRetry: retryLoadingData)
                     }
                 } else {
-                    ErrorView(message: "Errore caricamento dati", onRetry: retryLoadingData)
+                    AuthView()
                 }
             }
         }

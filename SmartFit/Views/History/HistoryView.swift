@@ -11,7 +11,7 @@ import SwiftUI
 struct HistoryView: View {
     @StateObject private var historyManager = WorkoutHistoryManager()
     @State private var showingEditSet: WorkoutSet? = nil
-
+    
     private var exerciseHistory: [String: [WorkoutSet]] {
         historyManager.getAllHistory()
     }
@@ -41,6 +41,7 @@ struct HistoryView: View {
                     .font(.headline)
                     .foregroundColor(.white)
             }
+            
             Spacer()
             
             if exerciseHistory.isEmpty {
@@ -65,6 +66,10 @@ struct HistoryView: View {
                 .listStyle(PlainListStyle()) // Rimuove lo stile predefinito della lista
                 .scrollContentBackground(.hidden) // Nasconde lo sfondo della lista
             }
+            
+            Spacer()
+            
+            TestPostApiView()
         }
         .padding()
         .cornerRadius(12)
