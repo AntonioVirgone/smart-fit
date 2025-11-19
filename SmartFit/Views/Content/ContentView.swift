@@ -16,7 +16,7 @@ struct ContentView: View {
     @StateObject private var dataService = WorkoutDataService()
     @StateObject private var workoutApiService = WorkoutApiService()
     @StateObject private var userApiService = UserApiService()
-
+    
     @State private var currentView: AppView = .home // 👈 Stato corrente
     @State private var showingMenu = false
     
@@ -25,21 +25,21 @@ struct ContentView: View {
     }
     
     var isLoading: Bool {
-        #if targetEnvironment(simulator)
+#if targetEnvironment(simulator)
         return workoutApiService.isLoading
-        #else
+#else
         return dataService.isLoading
-        #endif
+#endif
     }
-
+    
     var currentWorkoutPlan: WorkoutPlan? {
-        #if targetEnvironment(simulator)
+#if targetEnvironment(simulator)
         return workoutApiService.workoutPlan
-        #else
+#else
         return dataService.workoutPlan
-        #endif
+#endif
     }
-        
+    
     var body: some View {
         ZStack {
             // 🔹 Sfondo gradiente

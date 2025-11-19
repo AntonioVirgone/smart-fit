@@ -18,6 +18,12 @@ struct HistoryRow: View {
     
     var body: some View {
         HStack(spacing: 12) {
+            if workoutSet.type != nil {
+                // Logo o icona dell'app
+                Image(systemName: workoutSet.type == .series ? "s.circle" : "r.circle")
+                    .font(.system(size: 21))
+            }
+                        
             Image(systemName: "dumbbell.fill")
                 .font(.system(size: 12))
                 .foregroundColor(.blue)
@@ -41,10 +47,6 @@ struct HistoryRow: View {
             Spacer()
             
             VStack(alignment: .trailing, spacing: 2) {
-                if workoutSet.type != nil {
-                    Text(workoutSet.type == .series ? "Serie" : "Riscaldamento")
-                        .foregroundColor(textColor)
-                }
                 Text("\(workoutSet.reps) reps")
                     .font(.system(size: 14, weight: .medium))
                     .foregroundColor(textColor)

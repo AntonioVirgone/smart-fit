@@ -11,7 +11,8 @@ internal import Combine
 class UserApiService: APIService {
     @Published var user: UserResponse?
     @Published var isLogged: Bool = false
-
+    @Published var isRegistered: Bool = false
+    
     func signIn(user: User) {
         // URL dell'API di test
         guard let url = URL(string: "\(basePath)/auth/login") else {
