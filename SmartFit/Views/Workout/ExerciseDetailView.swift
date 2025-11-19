@@ -204,7 +204,6 @@ struct ExerciseDetailView: View {
                     showingAddSet = true
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled(exerciseHistory.count >= 10)
             }
             
             if exerciseHistory.isEmpty {
@@ -217,7 +216,7 @@ struct ExerciseDetailView: View {
         .background(Color(.systemBackground))
         .cornerRadius(12)
         .sheet(item: $showingEditSet) { setToEdit in
-            EditSetView(
+            EditSetNewView(
                 exerciseName: exercise.name,
                 muscleGroup: exercise.muscleGroup,
                 workoutSet: setToEdit,
