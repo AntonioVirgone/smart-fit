@@ -1,8 +1,8 @@
 //
-//  EditSetView.swift
+//  AddSetView.swift
 //  SmartFit
 //
-//  Created by Antonio Virgone on 09/11/25.
+//  Created by Antonio Virgone on 08/11/25.
 //
 
 import Foundation
@@ -13,15 +13,22 @@ struct EditSetView: View {
     let exerciseName: String
     let muscleGroup: String
     let workoutSet: WorkoutSet
+
+    @State var reps: String
+    @State var weight: String
+    @State var notes: String
+    @Binding var isPresented: Bool
+    @State var isHeating: Bool
+    @State var intensity: WorkoutIntensity
+    
+    @State private var showError = false
+    @FocusState private var focusedField: Field?
     
     @EnvironmentObject var historyManager: WorkoutHistoryManager
-    @Binding var isPresented: Bool
-    
-    @State private var reps: String
-    @State private var weight: String
-    @State private var notes: String
-    @State private var showError = false
-    @FocusState private var focusedField: AddSetView.Field?
+
+    enum Field {
+        case reps, weight, notes
+    }
     
     init(exerciseName: String, muscleGroup: String, workoutSet: WorkoutSet, isPresented: Binding<Bool>) {
         self.exerciseName = exerciseName
@@ -29,17 +36,22 @@ struct EditSetView: View {
         self.workoutSet = workoutSet
         self._isPresented = isPresented
         
+        _isHeating = State(initialValue: workoutSet.type == .heating)
         _reps = State(initialValue: "\(workoutSet.reps)")
         _weight = State(initialValue: String(format: "%.1f", workoutSet.weight))
         _notes = State(initialValue: workoutSet.notes ?? "")
+        _intensity = State(initialValue: workoutSet.intensity ?? .light)
     }
-    
+
     var body: some View {
-        NavigationView {
+        NavigationView{
             Form {
-                // Header informativo
-                infoSection
+                // Sezione scelta tipo
+                toggleHeating
                 
+                // Sezione intensità
+                intensitySelector
+
                 // Sezione dati serie
                 dataSection
                 
@@ -86,36 +98,54 @@ struct EditSetView: View {
         }
     }
     
-    // MARK: - Info Section
-    private var infoSection: some View {
-        Section(header: Text("Serie Originale")) {
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Data: \(formattedDate)")
-                        .font(.subheadline)
-                    
-                    Text("Originale: \(workoutSet.reps) reps × \(workoutSet.weight, specifier: "%.1f") kg")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+    private var intensitySelector: some View {
+        Section(header: Text("Intensità")) {
+            HStack(spacing: 12) {
+                ForEach(WorkoutIntensity.allCases, id: \.self) { level in
+                    Text(level.rawValue)
+                        .font(.system(size: 12))
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 20)
+                        .background(
+                            colorSelector(level: level)
+                        )
+                        .foregroundStyle(intensity == level ? .white : .primary)
+                        .cornerRadius(12)
+                        .onTapGesture {
+                            intensity = level
+                        }
                 }
-                
-                Spacer()
-                
-                Image(systemName: "clock.badge.exclamationmark")
-                    .foregroundColor(.orange)
             }
+            .frame(maxWidth: .infinity, alignment: .center)
+            .animation(.spring(), value: intensity)
+        }
+    }
+    
+    private func colorSelector(level: WorkoutIntensity) -> Color {
+        if intensity == level {
+            switch level {
+            case .light: return Color.blue
+            case .moderate: return Color.purple
+            case .intense: return Color.red
+            }
+        }
+        return Color.gray.opacity(0.2)
+    }
+    
+    private var toggleHeating: some View {
+        Section(header: Text("Tipo Serie")) {
+            Toggle("Riscaldamento", isOn: $isHeating).padding()
         }
     }
     
     // MARK: - Data Section
     private var dataSection: some View {
-        Section(header: Text("Nuovi Valori")) {
+        Section(header: Text("Dati Serie")) {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Ripetizioni")
                     .font(.caption)
                     .foregroundColor(.secondary)
-                
-                TextField("Ripetizioni", text: $reps)
+                TextField("Es. 8", text: $reps)
                     .keyboardType(.numberPad)
                     .focused($focusedField, equals: .reps)
                     .padding(8)
@@ -129,12 +159,14 @@ struct EditSetView: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
                 
-                TextField("Peso", text: $weight)
-                    .keyboardType(.decimalPad)
-                    .focused($focusedField, equals: .weight)
-                    .padding(8)
-                    .background(Color(.systemGray6))
-                    .cornerRadius(8)
+                TextField("Es: 50.5", text: Binding(get: { weight }, set: { newValue in
+                    weight = newValue.replacingOccurrences(of: ",", with: ".")
+                }))
+                .keyboardType(.decimalPad)
+                .focused($focusedField, equals: .weight)
+                .padding(8)
+                .background(Color(.systemGray6))
+                .cornerRadius(8)
             }
             .padding(.vertical, 4)
         }
@@ -142,9 +174,9 @@ struct EditSetView: View {
     
     // MARK: - Notes Section
     private var notesSection: some View {
-        Section(header: Text("Note")) {
+        Section(header: Text("Note Opzionali")) {
             TextEditor(text: $notes)
-                .frame(height: 80)
+                .frame(height: 100)
                 .focused($focusedField, equals: .notes)
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
@@ -152,6 +184,43 @@ struct EditSetView: View {
                 )
                 .padding(.vertical, 4)
         }
+    }
+    
+    // MARK: - Actions
+    private func saveChanges() {
+        guard let newReps = Int(reps), let newWeight = Double(weight) else {
+            showError = true
+            return
+        }
+        
+        historyManager.updateSet(
+            for: exerciseName,
+            setId: workoutSet.id,
+            newReps: Int(newReps),
+            newWeight: Double(newWeight),
+            newNotes: notes.isEmpty ? nil : notes,
+            type: isHeating ? .heating : .series,
+            intensity: intensity
+        )
+        
+        isPresented = false
+        
+        // Feedback haptic
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+    }
+    
+    // MARK: - Background
+    var backgroundGradientForm: some View {
+        LinearGradient(
+            gradient: Gradient(colors: [
+                Color(red: 0.16, green: 0.50, blue: 0.73),  // Blu oceano
+                headerIconColor(muscleGroup: muscleGroup).opacity(0.2)
+            ]),
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        .ignoresSafeArea()
     }
     
     // MARK: - Preview Section
@@ -218,47 +287,5 @@ struct EditSetView: View {
                     .font(.subheadline)
             }
         }
-    }
-    // MARK: - Actions
-    private func saveChanges() {
-        guard let newReps = Int(reps), let newWeight = Double(weight) else {
-            showError = true
-            return
-        }
-        
-        historyManager.updateSet(
-            for: exerciseName,
-            setId: workoutSet.id,
-            newReps: newReps,
-            newWeight: newWeight,
-            newNotes: notes.isEmpty ? nil : notes
-        )
-        
-        isPresented = false
-        
-        // Feedback haptic
-        let generator = UINotificationFeedbackGenerator()
-        generator.notificationOccurred(.success)
-    }
-    
-    // MARK: - Computed Properties
-    private var formattedDate: String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return formatter.string(from: workoutSet.date)
-    }
-    
-    // MARK: - Background
-    var backgroundGradientForm: some View {
-        LinearGradient(
-            gradient: Gradient(colors: [
-                Color(red: 0.16, green: 0.50, blue: 0.73),  // Blu oceano
-                headerIconColor(muscleGroup: muscleGroup).opacity(0.2)
-            ]),
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
     }
 }

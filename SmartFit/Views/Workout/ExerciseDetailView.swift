@@ -216,7 +216,7 @@ struct ExerciseDetailView: View {
         .background(Color(.systemBackground))
         .cornerRadius(12)
         .sheet(item: $showingEditSet) { setToEdit in
-            EditSetNewView(
+            EditSetView(
                 exerciseName: exercise.name,
                 muscleGroup: exercise.muscleGroup,
                 workoutSet: setToEdit,
