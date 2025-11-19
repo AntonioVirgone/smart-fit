@@ -104,16 +104,18 @@ struct AuthView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundColor(.white)
-                .padding(.top, 20)            
+                .padding(.top, 20)
         }
         .scaleEffect(size)
         .opacity(opacity)
+        /*
         .onAppear {
             withAnimation(.easeIn(duration: 1.2)) {
                 self.size = 1.0
                 self.opacity = 1.0
             }
         }
+         */
     }
     
     private var loginButton: some View {
