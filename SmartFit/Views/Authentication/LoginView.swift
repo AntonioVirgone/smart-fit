@@ -83,7 +83,7 @@ struct LoginView: View {
         VStack {
             Button(action: {
                 self.onClickRequest = true
-                apiService.signIn(user: User(username: username, password: password))
+                apiService.login(user: User(username: username, password: password))
             }) {
                 Text("Login")
                     .font(.headline)

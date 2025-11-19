@@ -13,7 +13,7 @@ class UserApiService: APIService {
     @Published var isLogged: Bool = false
     @Published var isRegistered: Bool = false
     
-    func signIn(user: User) {
+    func login(user: User) {
         // URL dell'API di test
         guard let url = URL(string: "\(basePath)/auth/login") else {
             errorMessage = "URL non valido"
@@ -92,6 +92,9 @@ class UserApiService: APIService {
                     let decodedUsers = try JSONDecoder().decode(UserResponse.self, from: data)
                     self?.user = decodedUsers
                     self?.isLogged = true
+                    
+                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
+
                     print("✅ Successo! Trovati \(decodedUsers) utenti")
                 } catch {
                     self?.errorMessage = "Errore decodifica: \(error.localizedDescription)"

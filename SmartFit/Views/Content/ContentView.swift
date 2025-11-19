@@ -21,7 +21,7 @@ struct ContentView: View {
     @State private var showingMenu = false
     
     var isLogged: Bool {
-        return userApiService.isLogged
+        return UserDefaults.standard.bool(forKey: "isLoggedIn");
     }
     
     var isLoading: Bool {
