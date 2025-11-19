@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct TestApiConnectionView: View {
-    @StateObject private var apiService = APIService()
+    @StateObject private var apiService = WorkoutApiService()
     
     var body: some View {
         NavigationView {

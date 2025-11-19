@@ -123,6 +123,18 @@ struct MenuOverlayView: View {
                                 // Naviga alle impostazioni
                             }
                         )
+                        MenuRow(
+                            icon: "gearshape.fill",
+                            title: "Logout",
+                            color: .red,
+                            action: {
+                                withAnimation {
+                                    currentView = .home
+                                    showingMenu = false
+                                }
+                                UserDefaults.standard.set(false, forKey: "isLoggedIn")
+                            }
+                        )
                     }
                     
                     // Footer Menu

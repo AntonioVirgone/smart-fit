@@ -14,25 +14,30 @@ struct ContentView: View {
     
     // MARK: - Environment Objects
     @StateObject private var dataService = WorkoutDataService()
-    @StateObject private var apiService = APIService()
+    @StateObject private var workoutApiService = WorkoutApiService()
+    @StateObject private var userApiService = UserApiService()
     
     @State private var currentView: AppView = .home // 👈 Stato corrente
     @State private var showingMenu = false
     
-    var isLoading: Bool {
-        #if targetEnvironment(simulator)
-        return apiService.isLoading
-        #else
-        return dataService.isLoading
-        #endif
+    var isLogged: Bool {
+        return UserDefaults.standard.bool(forKey: "isLoggedIn");
     }
-
+    
+    var isLoading: Bool {
+#if targetEnvironment(simulator)
+        return workoutApiService.isLoading
+#else
+        return dataService.isLoading
+#endif
+    }
+    
     var currentWorkoutPlan: WorkoutPlan? {
-        #if targetEnvironment(simulator)
-        return apiService.workoutPlan
-        #else
+#if targetEnvironment(simulator)
+        return workoutApiService.workoutPlan
+#else
         return dataService.workoutPlan
-        #endif
+#endif
     }
     
     var body: some View {
@@ -42,41 +47,46 @@ struct ContentView: View {
             
             // 🔹 Contenuto principale
             Group {
-                if isLoading {
-                    LoadingView()
-                } else if let workoutPlan = currentWorkoutPlan {
-                    ZStack {
-                        VStack(spacing: 16) {
-                            // Header con Logo
-                            headerView
-                            
-                            Spacer()
-                            
-                            // HomeView(workoutPlan: workoutPlan)
-                            // View Corrente basata sullo stato
-                            switch currentView {
-                            case .home:
-                                HomeView(workoutPlan: workoutPlan, showingMenu: $showingMenu)
-                            case .saveHistory:
-                                TestPostApiView()
-                            case .getWorkputData:
-                                TestApiConnectionView()
-                            case .settings:
-                                SettingsView()
-                            case .history:
-                                HistoryView()
+                if isLogged {
+                    if isLoading {
+                        LoadingView()
+                    } else if let workoutPlan = currentWorkoutPlan {
+                        ZStack {
+                            VStack(spacing: 16) {
+                                // Header con Logo
+                                headerView
+                                
+                                Spacer()
+                                
+                                // HomeView(workoutPlan: workoutPlan)
+                                // View Corrente basata sullo stato
+                                switch currentView {
+                                case .home:
+                                    HomeView(workoutPlan: workoutPlan, showingMenu: $showingMenu)
+                                case .saveHistory:
+                                    TestPostApiView()
+                                case .getWorkputData:
+                                    TestApiConnectionView()
+                                case .settings:
+                                    SettingsView()
+                                case .history:
+                                    HistoryView()
+                                }
+                            }
+                            // 👈 MENU OVERLAY A LIVELLO DI ZSTACK - sopra tutto
+                            if showingMenu {
+                                MenuOverlayView(
+                                    showingMenu: $showingMenu,
+                                    currentView: $currentView // 👈 Passa il binding
+                                )
                             }
                         }
-                        // 👈 MENU OVERLAY A LIVELLO DI ZSTACK - sopra tutto
-                        if showingMenu {
-                            MenuOverlayView(
-                                showingMenu: $showingMenu,
-                                currentView: $currentView // 👈 Passa il binding
-                            )
-                        }
+                    } else {
+                        ErrorView(message: "Errore caricamento dati", onRetry: retryLoadingData)
                     }
                 } else {
-                    ErrorView(message: "Errore caricamento dati", onRetry: retryLoadingData)
+                    AuthView()
+                        .environmentObject(userApiService)
                 }
             }
         }
@@ -153,7 +163,7 @@ struct ContentView: View {
 #if !targetEnvironment(simulator)
         dataService.loadWorkoutData()
 #else
-        apiService.loadWorkoutData()
+        workoutApiService.loadWorkoutData()
 #endif
     }
     
@@ -163,8 +173,8 @@ struct ContentView: View {
         dataService.isLoading = true
         dataService.errorMessage = nil
 #else
-        apiService.isLoading = true
-        apiService.errorMessage = nil
+        workoutApiService.isLoading = true
+        workoutApiService.errorMessage = nil
 #endif
         loadInitialData()
     }
