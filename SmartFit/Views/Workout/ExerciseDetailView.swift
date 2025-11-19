@@ -204,7 +204,6 @@ struct ExerciseDetailView: View {
                     showingAddSet = true
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled(exerciseHistory.count >= 10)
             }
             
             if exerciseHistory.isEmpty {
