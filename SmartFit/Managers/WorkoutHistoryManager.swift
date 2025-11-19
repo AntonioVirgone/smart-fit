@@ -42,7 +42,7 @@ class WorkoutHistoryManager: ObservableObject {
     }
     
     // MARK: - Modifica Serie Esistenti
-    func updateSet(for exerciseName: String, setId: UUID, newReps: Int, newWeight: Double, newNotes: String? = nil) {
+    func updateSet(for exerciseName: String, setId: UUID, newReps: Int, newWeight: Double, newNotes: String? = nil, type: WorkoutType? = nil, intensity: WorkoutIntensity? = nil) {
         guard var sets = workoutHistory[exerciseName],
               let index = sets.firstIndex(where: { $0.id == setId }) else {
             print("❌ Serie non trovata per l'aggiornamento")
@@ -54,6 +54,8 @@ class WorkoutHistoryManager: ObservableObject {
         updatedSet.reps = newReps
         updatedSet.weight = newWeight
         updatedSet.notes = newNotes
+        updatedSet.type = type
+        updatedSet.intensity = intensity
         
         // Sostituisce la serie nell'array
         sets[index] = updatedSet

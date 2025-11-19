@@ -58,7 +58,7 @@ struct WorkoutSet: Identifiable, Codable, Hashable {
     var reps: Int
     var weight: Double
     var notes: String?
-    let type: WorkoutType?
+    var type: WorkoutType?
     var intensity: WorkoutIntensity?
 
     init(id: UUID = UUID(),

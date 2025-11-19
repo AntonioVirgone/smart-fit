@@ -131,13 +131,13 @@ struct MenuOverlayView: View {
                             .background(Color.white.opacity(0.3))
                         
                         HStack {
-                            Text("GymBro v1.0")
+                            Text("GymBro v\(appVersion.0).\(appVersion.1)")
                                 .font(.system(size: 12, weight: .medium))
                                 .foregroundColor(.white.opacity(0.6))
                             
                             Spacer()
                             
-                            Text("by Il Tuo Nome")
+                            Text("by Antonio Virgone")
                                 .font(.system(size: 12, weight: .medium))
                                 .foregroundColor(.white.opacity(0.6))
                         }
@@ -163,6 +163,12 @@ struct MenuOverlayView: View {
         }
         .transition(.opacity.combined(with: .scale(scale: 0.95)))
         .zIndex(1000) // 👈 ASSICURA che il menu sia sopra tutto
+    }
+    
+    private var appVersion: (String, String) {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "-"
+        return (version, build)
     }
 }
 
