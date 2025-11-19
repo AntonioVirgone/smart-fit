@@ -14,16 +14,19 @@ struct ContentView: View {
     
     // MARK: - Environment Objects
     @StateObject private var dataService = WorkoutDataService()
-    @StateObject private var apiService = WorkoutApiService()
-    
+    @StateObject private var workoutApiService = WorkoutApiService()
+    @StateObject private var userApiService = UserApiService()
+
     @State private var currentView: AppView = .home // 👈 Stato corrente
     @State private var showingMenu = false
     
-    var isLogged: Bool = false
+    var isLogged: Bool {
+        return userApiService.isLogged
+    }
     
     var isLoading: Bool {
         #if targetEnvironment(simulator)
-        return apiService.isLoading
+        return workoutApiService.isLoading
         #else
         return dataService.isLoading
         #endif
@@ -31,12 +34,12 @@ struct ContentView: View {
 
     var currentWorkoutPlan: WorkoutPlan? {
         #if targetEnvironment(simulator)
-        return apiService.workoutPlan
+        return workoutApiService.workoutPlan
         #else
         return dataService.workoutPlan
         #endif
     }
-    
+        
     var body: some View {
         ZStack {
             // 🔹 Sfondo gradiente
@@ -83,6 +86,7 @@ struct ContentView: View {
                     }
                 } else {
                     AuthView()
+                        .environmentObject(userApiService)
                 }
             }
         }
@@ -159,7 +163,7 @@ struct ContentView: View {
 #if !targetEnvironment(simulator)
         dataService.loadWorkoutData()
 #else
-        apiService.loadWorkoutData()
+        workoutApiService.loadWorkoutData()
 #endif
     }
     
@@ -169,8 +173,8 @@ struct ContentView: View {
         dataService.isLoading = true
         dataService.errorMessage = nil
 #else
-        apiService.isLoading = true
-        apiService.errorMessage = nil
+        workoutApiService.isLoading = true
+        workoutApiService.errorMessage = nil
 #endif
         loadInitialData()
     }

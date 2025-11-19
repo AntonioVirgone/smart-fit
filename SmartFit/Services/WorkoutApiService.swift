@@ -9,6 +9,8 @@ import Foundation
 internal import Combine
 
 class WorkoutApiService: APIService {
+    @Published var workoutPlan: WorkoutPlan?
+
     // Funzione per fare la chiamata API
     func loadWorkoutData() {
         // URL dell'API di test

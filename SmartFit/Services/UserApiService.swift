@@ -9,10 +9,12 @@ import Foundation
 internal import Combine
 
 class UserApiService: APIService {
+    @Published var user: UserResponse?
+    @Published var isLogged: Bool = false
 
     func signIn(user: User) {
         // URL dell'API di test
-        guard let url = URL(string: "\(basePath)/users/signin") else {
+        guard let url = URL(string: "\(basePath)/auth/login") else {
             errorMessage = "URL non valido"
             isLoading = false
             isError = true
@@ -70,6 +72,31 @@ class UserApiService: APIService {
                         self?.isError = false
                     }
                 }
+                
+                // Controlla se ci sono dati
+                guard let data = data else {
+                    self?.errorMessage = "Nessun dato ricevuto"
+                    self?.rawJSON = "Nessun dato"
+                    return
+                }
+                
+                // Stampa i dati raw per debug
+                if let jsonString = String(data: data, encoding: .utf8) {
+                    print("📦 JSON Ricevuto: \(jsonString)")
+                    self?.rawJSON = jsonString
+                }
+                
+                // Prova a convertire il JSON nel modello Swift
+                do {
+                    let decodedUsers = try JSONDecoder().decode(UserResponse.self, from: data)
+                    self?.user = decodedUsers
+                    self?.isLogged = true
+                    print("✅ Successo! Trovati \(decodedUsers) utenti")
+                } catch {
+                    self?.errorMessage = "Errore decodifica: \(error.localizedDescription)"
+                    print("❌ Errore decodifica: \(error)")
+                }
+                
                 print("✅ POST request completata con successo")
             }
         }
@@ -145,4 +172,10 @@ class UserApiService: APIService {
         // Avvia la chiamata
         task.resume()
     }
+}
+
+class UserResponse: Codable {
+    var customerId: String
+    var accessToken: String
+    var refreshToken: String
 }

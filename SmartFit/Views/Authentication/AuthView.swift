@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 struct AuthView: View {
-    @StateObject private var apiService = UserApiService()
-    
+    @EnvironmentObject var apiService: UserApiService
+
     @State private var onClickRequest = false
 
     @State private var username: String = ""

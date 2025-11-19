@@ -9,7 +9,6 @@ import Foundation
 internal import Combine
 
 class APIService: ObservableObject {
-    @Published var workoutPlan: WorkoutPlan?
     @Published var isLoading: Bool = false
     @Published var isError: Bool = false
     @Published var errorMessage: String?
