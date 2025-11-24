@@ -33,6 +33,7 @@ struct SignUpView: View {
                         HStack {
                             Image(systemName: "person.fill")
                             TextField("Username", text: $newUsername)
+                                .textInputAutocapitalization(.never)
                         }
                         .padding()
                         .background(Color(.secondarySystemBackground))
