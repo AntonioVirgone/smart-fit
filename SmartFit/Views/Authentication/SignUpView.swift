@@ -33,6 +33,7 @@ struct SignUpView: View {
                         HStack {
                             Image(systemName: "person.fill")
                             TextField("Username", text: $newUsername)
+                                .textInputAutocapitalization(.never)
                         }
                         .padding()
                         .background(Color(.secondarySystemBackground))
@@ -70,10 +71,18 @@ struct SignUpView: View {
             )
             .padding(20)
             
-            Button("Torna al Login") {
+            Button(action: {
                 showRegister = false   // 👈 Torna indietro senza registrarsi
+            }) {
+                Text("Torna al Login")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)     // 🔥 prende tutta la larghezza possibile
+                    .background(Color.blue)
+                    .cornerRadius(10)
             }
-        }
+            .padding([.leading, .trailing], 35)        }
     }
     
     private var signupButton: some View {

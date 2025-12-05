@@ -21,7 +21,8 @@ struct ContentView: View {
     @State private var showingMenu = false
     
     var isLogged: Bool {
-        return UserDefaults.standard.bool(forKey: "isLoggedIn");
+        //return UserDefaults.standard.bool(forKey: "isLoggedIn");
+        return true
     }
     
     var isLoading: Bool {
@@ -113,7 +114,7 @@ struct ContentView: View {
                 .padding(.horizontal, 10)
                 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("GymBro")
+                    Text("SFAthlete")
                         .font(.system(size: 28, weight: .heavy, design: .rounded))
                         .foregroundColor(.white)
                     
