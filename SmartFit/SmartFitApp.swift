@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct SmartFitApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate   // <-- Questo collega l’AppDelegate a SwiftUI
+
     @StateObject private var dataService = WorkoutDataService()
     @StateObject private var historyManager = WorkoutHistoryManager()
         
