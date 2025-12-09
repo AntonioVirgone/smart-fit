@@ -1,24 +1,24 @@
 //
-//  LoginView.swift
+//  ActiveCustomerView.swift
 //  SmartFit
 //
-//  Created by Antonio Virgone on 19/11/25.
+//  Created by Antonio Virgone on 06/12/25.
 //
 
 import Foundation
 import SwiftUI
 
-struct LoginView: View {
+struct ActivationView: View {
     @EnvironmentObject var vm: CustomerViewModel
 
     @State private var onClickRequest = false
     
-    @State private var username: String = ""
-    @State private var password: String = ""
+    @State private var email: String = ""
+    @State private var activaionCode: String = ""
     
     @State private var size = 0.8
     @State private var opacity = 0.5
-
+    
     @State private var errorMessage: String?
 
     var body: some View {
@@ -31,16 +31,15 @@ struct LoginView: View {
                 VStack {
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
-                            Image(systemName: "person.fill")
-                            TextField("Username", text: $username)
-                                .textInputAutocapitalization(.never)
+                            Image(systemName: "envelope.fill")
+                            TextField("Mail", text: $email)
                         }
                         .padding()
                         .background(Color(.secondarySystemBackground))
                         .cornerRadius(8)
                         HStack {
                             Image(systemName: "lock")
-                            SecureField("Password", text: $password)
+                            TextField("ActivationCode", text: $activaionCode)
                         }
                         .padding()
                         .background(Color(.secondarySystemBackground))
@@ -54,9 +53,27 @@ struct LoginView: View {
                 separator(circleColor: Color.blue, isLoading: vm.isLoading)
                     .padding(.vertical, 10)
 
-                // MARK: - Login button
-                loginButton
-                    .padding(.bottom, 20)
+                // MARK: pulsante di registrazione
+                Button {
+                    Task { await activateCustomer() }
+                } label: {
+                    if vm.isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                    } else {
+                        Text("Attiva account")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                    }
+                }
+                .background(primryColor)
+                .cornerRadius(12)
+                .padding(.horizontal, 60)
+
             }
             .background(
                 RoundedRectangle(cornerRadius: 12)
@@ -66,45 +83,19 @@ struct LoginView: View {
         }
     }
     
-    private var loginButton: some View {
-        VStack {
-            Button {
-                Task { await loginCustomer() }
-            } label: {
-                if vm.isLoading {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                } else {
-                    Text("Login")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                }
-            }
-            .background(primryColor)
-            .cornerRadius(12)
-            .padding(.horizontal, 60)
-        }
-    }
-    
     // MARK: - Signup Logic
-    private func loginCustomer() async {
+    private func activateCustomer() async {
         vm.isLoading.toggle()
         
-        guard !username.isEmpty,
-              !password.isEmpty else {
+        guard !email.isEmpty,
+              !activaionCode.isEmpty else {
             errorMessage = "Tutti i campi sono obbligatori."
-
-            vm.isLoading.toggle()
             return
         }
 
         do {
-            try await vm.loginCustomer(email: username, password: password)
-            UserDefaults.standard.set(true, forKey: "isLoggedIn")
+            try await vm.activateCustomer(email: email, activationCode: activaionCode)
+            UserDefaults.standard.set(true, forKey: "isActivated")
         } catch {
             errorMessage = "Errore durante la registrazione. Riprova."
             print("Signup error:", error)

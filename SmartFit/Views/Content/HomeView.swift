@@ -7,93 +7,80 @@
 
 import Foundation
 import SwiftUI
+//
+//  HomeView.swift
+//  SmartFit
+//
+//  Created by Antonio Virgone on 13/11/25.
+//
+
+import Foundation
+import SwiftUI
 
 struct HomeView: View {
     let workoutPlan: WorkoutPlan
+   
     @State private var selectedDay: WorkoutDay?
     @State private var animationStates: [UUID: Bool] = [:]
-    @Binding var showingMenu: Bool
-
-    // Gradienti per ogni tipo di giornata
-    let dayGradients: [LinearGradient] = [
-        // Giornata 1 - Petto/Tricipiti
-        LinearGradient(
-            gradient: Gradient(colors: [Color(red: 0.20, green: 0.60, blue: 0.86), Color(red: 0.16, green: 0.50, blue: 0.73)]),
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        ),
-        // Giornata 2 - Dorsali/Bicipiti
-        LinearGradient(
-            gradient: Gradient(colors: [Color(red: 0.20, green: 0.80, blue: 0.35), Color(red: 0.00, green: 0.50, blue: 0.25)]),
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        ),
-        // Giornata 3 - Gambe/Spalle
-        LinearGradient(
-            gradient: Gradient(colors: [Color(red: 0.80, green: 0.30, blue: 0.10), Color(red: 0.60, green: 0.20, blue: 0.00)]),
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    ]
     
     var body: some View {
-        ZStack {            
-            ScrollView {
-                VStack(spacing: 30) {                    
-                    // Statistiche Overview
-                    statsOverviewView
-
-                    Spacer()
-                    
-                    // Cerchi Giornate Allenamento
-                    daysCircleView
-                    
-                    // Ultimi Allenamenti
-                    // recentWorkoutsView
-                }
-                .padding(.horizontal, 20)
-                .padding(.top, 1) // 👈 AGGIUNGI piccolo padding top per fix traslazione
+        
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 28) {
+                
+                // MARK: Greeting
+                greetingSection
+                
+                // MARK: Stats Overview
+                statsSection
+                
+                // MARK: Workout Days
+                daysSection
             }
+            .padding(.horizontal, 20)
+            .padding(.top, 10)
         }
-        .navigationBarHidden(true) // 👈 SPOSTA qui
+        .scrollContentBackground(.hidden)
+        .background(Color.clear)
         .sheet(item: $selectedDay) { day in
-            // 👈 CAMBIA: Usa NavigationView nel sheet invece
             NavigationView {
                 WorkoutDayDetailView(workoutDay: day)
             }
         }
     }
     
-    // MARK: - Statistiche Overview
-    private var statsOverviewView: some View {
-        VStack {
-            // Benvenuto
-            VStack(spacing: 8) {
-                Text(greetingMessage)
-                    .font(.system(size: 24, weight: .semibold, design: .rounded))
-                    .foregroundColor(.white)
-                
-                Text("Pronto per l'allenamento?")
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundColor(.white.opacity(0.8))
-            }
+    private var greetingSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            
+            Text(greetingMessage)
+                .font(.system(size: 26, weight: .semibold, design: .rounded))
+                .foregroundColor(.white)
+            
+            Text("Pronto per l'allenamento?")
+                .font(.system(size: 16, weight: .medium, design: .rounded))
+                .foregroundColor(.white.opacity(0.8))
+        }
+    }
 
+    private var statsSection: some View {
+        VStack(spacing: 16) {
+            
+            StatCardView(
+                value: "\(workoutPlan.days.count)",
+                label: "Giornate",
+                icon: "calendar.circle.fill",
+                color: .green
+            )
+            
             HStack(spacing: 16) {
-                StatCircle(
-                    value: "\(workoutPlan.days.count)",
-                    label: "Giornate",
-                    icon: "calendar.circle.fill",
-                    color: .green
-                )
-                
-                StatCircle(
+                StatCardView(
                     value: "\(totalExercises)",
                     label: "Esercizi",
                     icon: "dumbbell.fill",
                     color: .blue
                 )
                 
-                StatCircle(
+                StatCardView(
                     value: "\(estimatedTime)",
                     label: "Minuti",
                     icon: "clock.fill",
@@ -102,65 +89,50 @@ struct HomeView: View {
             }
         }
     }
-    
-    // MARK: - Cerchi Giornate
-    private var daysCircleView: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("Le Tue Giornate")
+
+    private var daysSection: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            
+            Text(workoutPlan.name)
                 .font(.system(size: 20, weight: .bold, design: .rounded))
                 .foregroundColor(.white)
-                .padding(.horizontal, 4)
             
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2), spacing: 20) {
-                ForEach(Array(workoutPlan.days.enumerated()), id: \.element.id) { index, day in
-                    DayCircleView(
-                        day: day,
-                        gradient: dayGradients[index % dayGradients.count],
-                        isAnimated: animationStates[day.id] ?? false
-                    ) {
-                        withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
-                            animationStates[day.id] = true
-                            selectedDay = day
-                        }
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 16) {
+                    ForEach(Array(workoutPlan.days.enumerated()), id: \.element.id) { index, day in
                         
-                        // Reset animazione dopo un delay
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            animationStates[day.id] = false
+                        DiscoverCardView(
+                            title: day.name,
+                            exercises: day.exercises.count,
+                            minutes: day.exercises.count * 5,
+                            color: cardColor(for: index),
+                            isAnimated: animationStates[day.id] ?? false
+                        ) {
+                            withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                                animationStates[day.id] = true
+                                selectedDay = day
+                            }
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                animationStates[day.id] = false
+                            }
                         }
                     }
                 }
             }
         }
     }
-    
-    // MARK: - Ultimi Allenamenti
-    private var recentWorkoutsView: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                Text("Ultime Sessioni")
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
-                    .foregroundColor(.white)
-                
-                Spacer()
-                
-                Button("Vedi Tutti") {
-                    // Navigazione a storico completo
-                }
-                .font(.system(size: 14, weight: .medium))
-                .foregroundColor(.white.opacity(0.8))
-            }
-            .padding(.horizontal, 4)
-            
-            // Placeholder per ultime sessioni
-            VStack(spacing: 12) {
-                ForEach(0..<2) { _ in
-                    RecentWorkoutRow()
-                }
-            }
-        }
+
+    private func cardColor(for index: Int) -> Color {
+        let palette: [Color] = [
+            Color.blue.opacity(0.8),
+            Color.green.opacity(0.8),
+            Color.orange.opacity(0.8),
+            Color.pink.opacity(0.8)
+        ]
+        return palette[index % palette.count]
     }
-    
-    // MARK: - Computed Properties
+
     private var greetingMessage: String {
         let hour = Calendar.current.component(.hour, from: Date())
         switch hour {
@@ -170,13 +142,14 @@ struct HomeView: View {
         default: return "Pronto ad allenarti! 💪"
         }
     }
-    
+
     private var totalExercises: Int {
-        workoutPlan.days.flatMap { $0.exercises }.count
+        workoutPlan.days.reduce(0) { $0 + $1.exercises.count }
     }
-    
+
     private var estimatedTime: Int {
-        // Stima 5 minuti per esercizio
-        return totalExercises * 5
+        totalExercises * 5
     }
+
 }
+

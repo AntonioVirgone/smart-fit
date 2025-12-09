@@ -8,14 +8,14 @@
 import Foundation
 internal import Combine
 
-class UserApiService: APIService {
+class UserApiService: ApiService {
     @Published var user: UserResponse?
     @Published var isLogged: Bool = false
     @Published var isRegistered: Bool = false
     
     func login(user: User) {
         // URL dell'API di test
-        guard let url = URL(string: "\(basePath)/auth/login") else {
+        guard let url = URL(string: "\(baseUrl)/auth/login") else {
             errorMessage = "URL non valido"
             isLoading = false
             isError = true
@@ -111,7 +111,7 @@ class UserApiService: APIService {
     
     func signUp(user: User) {
         // URL dell'API di test
-        guard let url = URL(string: "\(basePath)/users/signup") else {
+        guard let url = URL(string: "\(baseUrl)/users/signup") else {
             errorMessage = "URL non valido"
             isLoading = false
             isError = true
