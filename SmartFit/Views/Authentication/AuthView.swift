@@ -9,12 +9,17 @@ import Foundation
 import SwiftUI
 
 struct AuthView: View {
-    @State private var showRegister = false
+    @EnvironmentObject var vm: CustomerViewModel   // <--- ORA È CONDIVISO
+
+    var isActivated: Bool {
+        return UserDefaults.standard.bool(forKey: "isActivated");
+    }
+
     var body: some View {
-        if showRegister {
-            SignUpView(showRegister: $showRegister)
+        if isActivated {
+            LoginView()
         } else {
-            LoginView(showRegister: $showRegister)
+            ActivationView()
         }
     }
 }

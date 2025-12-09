@@ -21,6 +21,7 @@ enum AppView {
 struct MenuOverlayView: View {
     @Binding var showingMenu: Bool
     @Binding var currentView: AppView // 👈 Nuovo binding
+    @EnvironmentObject var vm: CustomerViewModel
 
     var body: some View {
         ZStack {
@@ -132,6 +133,7 @@ struct MenuOverlayView: View {
                                     currentView = .home
                                     showingMenu = false
                                 }
+                                vm.customer = nil
                                 UserDefaults.standard.set(false, forKey: "isLoggedIn")
                             }
                         )

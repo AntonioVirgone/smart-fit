@@ -8,10 +8,10 @@
 import Foundation
 internal import Combine
 
-class HistoryApiService: APIService {
+class HistoryApiService: ApiService {
     func saveHistory(history: History) {
         // URL dell'API di test
-        guard let url = URL(string: "\(basePath)/history/save-json") else {
+        guard let url = URL(string: "\(baseUrl)/history/save-json") else {
             errorMessage = "URL non valido"
             isLoading = false
             return

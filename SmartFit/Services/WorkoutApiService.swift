@@ -8,7 +8,7 @@
 import Foundation
 internal import Combine
 
-class WorkoutApiService: APIService {
+class WorkoutApiService: ApiService {
     @Published var workoutPlan: WorkoutPlan?
 
     // Funzione per fare la chiamata API
