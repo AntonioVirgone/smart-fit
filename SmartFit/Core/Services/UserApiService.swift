@@ -5,8 +5,8 @@
 //  Created by Antonio Virgone on 16/11/25.
 //
 
+import Combine
 import Foundation
-internal import Combine
 
 class UserApiService: ApiService {
     @Published var user: UserResponse?
@@ -24,6 +24,8 @@ class UserApiService: ApiService {
         
         print("🔗 Iniziando chiamata POST a: \(url)")
         isLoading = true
+        isError = false
+        errorMessage = nil
 
         // Crea la richiesta
         var request = URLRequest(url: url)
@@ -49,12 +51,11 @@ class UserApiService: ApiService {
         // Esegui la richiesta
         let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
             DispatchQueue.main.async {
-                self?.isLoading = true
-                
+                self?.isLoading = false
+
                 // Controlla se c'è un errore
                 if let error = error {
                     self?.errorMessage = "Errore: \(error.localizedDescription)"
-                    self?.isLoading = false
                     self?.isError = true
                     return
                 }
@@ -62,14 +63,12 @@ class UserApiService: ApiService {
                 // Controlla la risposta HTTP
                 if let httpResponse = response as? HTTPURLResponse {
                     print("📡 Status Code: \(httpResponse.statusCode)")
-                    
+
                     if !(200...299).contains(httpResponse.statusCode) {
                         self?.errorMessage = "Errore server: \(httpResponse.statusCode)"
-                        self?.isLoading = false
                         self?.isError = true
                         return
                     } else {
-                        self?.isLoading = false
                         self?.isError = false
                     }
                 }
@@ -117,9 +116,11 @@ class UserApiService: ApiService {
             isError = true
             return
         }
-        
+
         print("🔗 Iniziando chiamata POST a: \(url)")
         isLoading = true
+        isError = false
+        errorMessage = nil
 
         // Crea la richiesta
         var request = URLRequest(url: url)
@@ -145,12 +146,11 @@ class UserApiService: ApiService {
         // Esegui la richiesta
         let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
             DispatchQueue.main.async {
-                self?.isLoading = true
-                
+                self?.isLoading = false
+
                 // Controlla se c'è un errore
                 if let error = error {
                     self?.errorMessage = "Errore: \(error.localizedDescription)"
-                    self?.isLoading = false
                     self?.isError = true
                     return
                 }
@@ -161,11 +161,9 @@ class UserApiService: ApiService {
                     
                     if !(200...299).contains(httpResponse.statusCode) {
                         self?.errorMessage = "Errore server: \(httpResponse.statusCode)"
-                        self?.isLoading = false
                         self?.isError = true
                         return
                     } else {
-                        self?.isLoading = false
                         self?.isError = false
                     }
                 }

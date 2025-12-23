@@ -5,14 +5,18 @@
 //  Created by Antonio Virgone on 16/11/25.
 //
 
+import Combine
 import Foundation
-internal import Combine
 
 class WorkoutApiService: ApiService {
     @Published var workoutPlan: WorkoutPlan?
 
     // Funzione per fare la chiamata API
     func loadWorkoutData() {
+        isLoading = true
+        isError = false
+        errorMessage = nil
+
         // URL dell'API di test
         guard let url = URL(string: "https://smartfit.altervista.org/page.php?file=1") else {
             errorMessage = "URL non valido"
@@ -26,7 +30,7 @@ class WorkoutApiService: ApiService {
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             DispatchQueue.main.async {
                 self?.isLoading = false
-                
+
                 // Controlla se c'è un errore
                 if let error = error {
                     self?.errorMessage = "Errore: \(error.localizedDescription)"

@@ -9,13 +9,13 @@ import SwiftUI
 
 struct ContentView: View {
     
-    // MARK: - Properties
-    private let dataOrigin = "REMOTE"
-    
     // MARK: - Environment Objects
-    @StateObject private var dataService = WorkoutDataService()
+    @EnvironmentObject private var dataService: WorkoutDataService
+    @EnvironmentObject private var historyManager: WorkoutHistoryManager
+
+    // MARK: - Local State Objects
     @StateObject private var workoutApiService = WorkoutApiService()
-    @StateObject var vm = CustomerViewModel()
+    @StateObject private var viewModel = CustomerViewModel()
 
     var isLogged: Bool {
         return UserDefaults.standard.bool(forKey: "isLoggedIn");
@@ -44,18 +44,19 @@ struct ContentView: View {
             
             // 🔹 Contenuto principale
             Group {
-                if isLogged || vm.customer != nil {
+                if isLogged || viewModel.customer != nil {
                     if isLoading {
                         LoadingView()
                     } else if let workoutPlan = currentWorkoutPlan {
                         MainView(workoutPlan: workoutPlan)
-                            .environmentObject(vm)
+                            .environmentObject(viewModel)
+                            .environmentObject(historyManager)
                     } else {
                         ErrorView(message: "Errore caricamento dati", onRetry: retryLoadingData)
                     }
                 } else {
                     AuthView()
-                        .environmentObject(vm)
+                        .environmentObject(viewModel)
                 }
             }
         }

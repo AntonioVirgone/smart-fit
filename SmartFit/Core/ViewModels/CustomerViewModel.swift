@@ -7,12 +7,13 @@
 
 import Foundation
 import SwiftUI
-internal import Combine
+import Combine
 
 @MainActor
 class CustomerViewModel: ObservableObject {
     @Published var customer: Customer?
     @Published var isLoading: Bool = false
+    @Published var errorMessage: String?
 
     private let api = ApiService()
     
@@ -23,17 +24,16 @@ class CustomerViewModel: ObservableObject {
             let password: String
         }
 
+        isLoading = true
+        errorMessage = nil
+        defer { isLoading = false }
+
         do {
             let body = LoginCustomerRequest(email: email, password: password)
-            
-            let loginCustomer: Customer = try await api.post("/customers/login", body: body)
-            
-            print(loginCustomer)
-            
-            customer = loginCustomer
+            customer = try await api.post("/customers/login", body: body)
         } catch {
-            print("Errore [POST] loginCustomer: ", error)
-            throw error   // 🔥 RILANCIA L’ERRORE QUI
+            errorMessage = "Errore durante il login: \(error.localizedDescription)"
+            throw error
         }
     }
     
@@ -44,17 +44,16 @@ class CustomerViewModel: ObservableObject {
             let activationCode: String
         }
 
+        isLoading = true
+        errorMessage = nil
+        defer { isLoading = false }
+
         do {
             let body = ActivateCustomerRequest(email: email, activationCode: activationCode)
-            
-            let activatedCustomer: Customer = try await api.patch("/customers/activate", body: body)
-            
-            print(activatedCustomer)
-            
-            customer = activatedCustomer
+            customer = try await api.patch("/customers/activate", body: body)
         } catch {
-            print("Errore [POST] activateCustomer: ", error)
-            throw error   // 🔥 RILANCIA L’ERRORE QUI
+            errorMessage = "Errore durante l'attivazione: \(error.localizedDescription)"
+            throw error
         }
     }
 

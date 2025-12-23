@@ -6,7 +6,7 @@
 //
 
 import Foundation
-internal import Combine
+import Combine
 
 // MARK: - Manager per lo Storico Allenamenti (CRUD)
 class WorkoutHistoryManager: ObservableObject {
@@ -157,7 +157,8 @@ class WorkoutHistoryManager: ObservableObject {
                 dateFormatter.timeStyle = .short
                 
                 exportString += "  \(dateFormatter.string(from: set.date)) - "
-                exportString += "\(set.reps) reps × \(set.weight, default: "%.1f") kg"
+                let weightString = String(format: "%.1f", set.weight)
+                exportString += "\(set.reps) reps × \(weightString) kg"
                 
                 if let notes = set.notes, !notes.isEmpty {
                     exportString += " - \(notes)"
